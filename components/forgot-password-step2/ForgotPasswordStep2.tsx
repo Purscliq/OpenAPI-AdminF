@@ -7,7 +7,7 @@ import {
 } from "@/lib/AntdComponents";
 import { Form } from "antd";
 
-const ForgotPassword = () => {
+const ForgotPasswordStep2 = () => {
   const router = useRouter();
 
   return (
@@ -16,11 +16,11 @@ const ForgotPassword = () => {
         <div className="space-y-8 w-full">
           <span className="space-y-2 text-center">
             <h1 className="font-bold text-[18px] md:text-[32px] text-[#000000]">
-              Forgot Password
+              Email Verification
             </h1>
             <p className=" text-gray-700 md:text-base text-[14px]">
-              Kindly enter the email address linked to this account and we will
-              send you a code to enable you change your password.
+              Kindly enter the 6 digit code that has been sent to your email
+              address
             </p>
           </span>
 
@@ -45,7 +45,7 @@ const ForgotPassword = () => {
 
             <span className="flex justify-center">
               <Button
-                onClick={() => router.push("/forgot-password-step2")}
+                onClick={() => router.push("/reset-password")}
                 htmlType="submit"
                 type="primary"
                 className="!h-[3rem] md:text-[18px] !bg-[#010101] w-full md:w-[80%]"
@@ -54,10 +54,10 @@ const ForgotPassword = () => {
               </Button>
             </span>
           </Form>
-        </div>{" "}
+        </div>
       </main>
     </div>
   );
 };
 
-export default ForgotPassword;
+export default ForgotPasswordStep2;

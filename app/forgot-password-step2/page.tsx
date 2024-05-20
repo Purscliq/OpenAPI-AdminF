@@ -1,10 +1,7 @@
-"use client";
-import PasswordResetV2 from "@/components/forgot-pass-step2/PasswordResetStep2";
-import { useSearchParams } from "next/navigation";
+import ForgotPasswordStep2 from "@/components/forgot-password-step2/ForgotPasswordStep2";
 
 const Page = () => {
-  const params = useSearchParams();
-  return <PasswordResetV2 email={params.get("email") || ""} />;
+  return <ForgotPasswordStep2 />;
 };
 
 export default Page;

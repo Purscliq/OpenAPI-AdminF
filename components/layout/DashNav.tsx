@@ -5,7 +5,7 @@ import { CiSearch } from "react-icons/ci";
 const DashNav = () => {
   return (
     <>
-      <nav className="flex gap-8 items-center px-5 py-2">
+      <nav className="flex gap-8 items-center px-5 py-3">
         <label
           htmlFor="my-drawer-2"
           className="flex lg:hidden text-blue-800 px-3"
