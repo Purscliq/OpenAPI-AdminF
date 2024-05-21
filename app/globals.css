@@ -6,7 +6,7 @@
   display: none;
 }
 .ant-table th {
-  background-color: #EEF2F7 !important ;
+  background-color: #eef2f7 !important ;
   font-size: small !important;
-  color: #7C8493 !important; /* Customize the background color */
+  color: #7c8493 !important; /* Customize the background color */
 }

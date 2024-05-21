@@ -1,4 +1,5 @@
 import React from "react";
+import ComplianceTable from "./ComplianceTable";
 
 const Compliance = () => {
   return (
@@ -9,6 +10,7 @@ const Compliance = () => {
           Open the panel and watch your progress and growth in knowledge.
         </p>
       </span>
+      <ComplianceTable />
     </section>
   );
 };
