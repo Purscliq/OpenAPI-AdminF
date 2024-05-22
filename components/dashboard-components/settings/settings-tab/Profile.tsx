@@ -1,5 +1,6 @@
 "use client";
-import { SelectProps } from "antd";
+
+import { Form, SelectProps } from "antd";
 import { CustomSelect as Select } from "@/lib/AntdComponents";
 
 const Profile = () => {
@@ -25,32 +26,35 @@ const Profile = () => {
           This is Company information that you can update anytime.
         </p>
       </span>
-      <div className=" w-full rounded-md">
+
+      <Form className=" w-full rounded-md">
         {/* First Name Section */}
-        <div className="mb-4 p-2 grid grid-cols-[400px,1fr] gap-6 items-center">
+        <div className="mb-4 p-2 grid md:grid-cols-[400px,1fr] gap-6 items-center">
           <div className="text-sm flex-col flex">
-            <h1 className="font-semibold">Personal Details</h1>{" "}
+            <h2 className="font-semibold text-base">Personal Details:</h2>{" "}
           </div>
           <div className="space-y-3 flex flex-col  w-full md:w-[400px]">
             <div className="w-full space-y-1">
-              <label htmlFor="firstName" className="font-semibold text-sm">
+              <label htmlFor="fullName" className="font-semibold text-sm">
                 Full Name
               </label>
               <input
                 type="text"
-                id="firstName"
+                id="fullName"
                 placeholder="Full Name"
+                required
                 className="  w-full px-3 py-2 border border-gray-300 text-gray-800 placeholder-text-gray-900 text-sm rounded-md focus:outline-none"
               />
             </div>
             <div className="w-full  space-y-1">
-              <label htmlFor="firstName" className="font-semibold text-sm">
+              <label htmlFor="email" className="font-semibold text-sm">
                 Email
               </label>
               <input
                 type="text"
-                id="lastName"
+                id="email"
                 placeholder="Email Address"
+                required
                 className="w-full px-3 py-2 border border-gray-300 text-gray-800 placeholder-text-gray-900 text-sm rounded-md focus:outline-none"
               />
             </div>
@@ -71,43 +75,49 @@ const Profile = () => {
           </div>
         </div>
         <hr />
-        {/* pass Section */}
-        <div className="mb-4 p-2 grid grid-cols-[400px,1fr] gap-6 items-center">
+
+        {/* password Section */}
+        <div className="mb-4 p-2 grid md:grid-cols-[400px,1fr] gap-6 items-center">
           <div className="text-sm flex-col flex">
-            <h1 className="font-semibold">New Password</h1>{" "}
+            <h2 className="font-semibold text-base">New Password:</h2>{" "}
             <span className="text-sm mt-2">
               Manage your password to make sure it is safe{" "}
             </span>
           </div>
           <div className="space-y-3 flex flex-col  w-full md:w-[400px]">
             <div className="w-full space-y-1">
-              <label htmlFor="password" className="font-semibold text-sm">
+              <label htmlFor="oldPassword" className="font-semibold text-sm">
                 Old Password
               </label>
               <input
                 type="password"
-                id="firstName"
+                id="oldPassword"
+                required
                 className="  w-full px-3 py-2 border border-gray-300 text-gray-800 placeholder-text-gray-900 text-sm rounded-md focus:outline-none"
               />
             </div>
             <div className="w-full  space-y-1">
-              <label htmlFor="firstName" className="font-semibold text-sm">
+              <label htmlFor="password" className="font-semibold text-sm">
                 New Password
               </label>
               <input
                 type="password"
-                id="lastName"
+                id="password"
+                required
                 className="w-full px-3 py-2 border border-gray-300 text-gray-800 placeholder-text-gray-900 text-sm rounded-md focus:outline-none"
               />
             </div>
             <div className="flex justify-center mx-auto items-end my-3">
-              <button className="btn w-[400px] bg-black hover:bg-black text-white">
+              <button
+                type="submit"
+                className="btn w-[400px] bg-black hover:bg-black text-white"
+              >
                 Update Password
               </button>
             </div>
           </div>
         </div>
-      </div>
+      </Form>
     </div>
   );
 };
