@@ -104,7 +104,7 @@ const data: DataType[] = [
 
 const AccountTable = () => {
   return (
-    <section className="max-w-[1640px] overflow-x-scroll bg-white p-6 rounded-lg space-y-4">
+    <section className="max-w-[1640px] h-full overflow-x-scroll md:overflow-x-clip bg-white p-6 rounded-lg space-y-4">
       <div className="flex gap-8 justify-between items-center">
         <p className="font-bold text-base">Account List</p>
         <Button className="flex gap-2 items-center !border border-[#B8C9C9] rounded-md px-3 py-2">
