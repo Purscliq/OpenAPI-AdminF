@@ -1,11 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import {
-  CustomInput as Input,
-  CustomButton as Button,
-} from "@/lib/AntdComponents";
-import { Form } from "antd";
+import { CustomButton as Button } from "@/lib/AntdComponents";
+import { Form, Input } from "antd";
 
 const ForgotPasswordStep2 = () => {
   const router = useRouter();
@@ -25,21 +22,12 @@ const ForgotPasswordStep2 = () => {
           </span>
 
           <Form className="!w-full !space-y-8">
-            <div className="w-full flex flex-col items-start justify-start gap-[0.2rem]">
-              <label
-                htmlFor="email"
-                className="text-[#181336] text-sm font-[500]"
-              >
-                Email Address
-              </label>
-              <Input
-                className="w-full "
-                placeholder="Email Address"
-                id="email"
-                type="email"
-                name="email"
+            <div className="w-full flex justify-center">
+              <Input.OTP
+                // mask="•"
                 size="large"
-                required
+                autoFocus
+                className="!text-2xl !h-24 w-12 text-center"
               />
             </div>
 
