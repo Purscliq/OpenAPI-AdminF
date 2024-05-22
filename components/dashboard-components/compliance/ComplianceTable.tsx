@@ -103,7 +103,7 @@ const data: DataType[] = [
 
 const ComplianceTable = () => {
   return (
-    <section className="max-w-[1640px] overflow-x-scroll bg-white p-6 rounded-lg space-y-4">
+    <section className="max-w-[1640px] h-full overflow-x-scroll md:overflow-x-clip bg-white p-6 rounded-lg space-y-4">
       <div className="flex justify-end">
         <Button className="flex gap-2 items-center !border border-[#B8C9C9] rounded-md px-3 py-2">
           <FilterIcon className="w-5 h-5" />
