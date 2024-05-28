@@ -35,7 +35,7 @@ const ComplianceDetails = () => {
     <section className="max-w-[1640px] flex flex-col gap-6 bg-[#FAFAFA] px-6 py-4 md:h-screen overflow-y-scroll">
       <div className="md:flex space-y-4 md:space-y-0 justify-between">
         <span className="flex gap-2 items-center text-[#25324B]">
-          <button onClick={() => router.back()} className="">
+          <button title="Back" onClick={() => router.back()} className="">
             <GoArrowLeft className="w-[30px] h-[30px]" />
           </button>
           <h2 className="text-base md:text-[24px] font-bold">
