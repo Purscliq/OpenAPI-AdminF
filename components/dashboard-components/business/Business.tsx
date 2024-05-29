@@ -58,10 +58,16 @@ const Business = () => {
               </p>
             </span>
             <span
-              className={`bg-[${item.iconBgColor}]/20 rounded-full flex justify-center items-center w-[60px] h-[60px]`}
+              className="rounded-full flex justify-center items-center w-[60px] h-[60px]"
+              style={{ backgroundColor: `${item.iconBgColor}20` }}
             >
               {item.icon}
             </span>
+            {/* <span
+              className={`bg-[${item.iconBgColor}]/20 rounded-full flex justify-center items-center w-[60px] h-[60px]`}
+            >
+              {item.icon}
+            </span> */}
           </div>
         ))}
       </div>
