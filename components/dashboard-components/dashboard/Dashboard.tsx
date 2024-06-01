@@ -18,6 +18,97 @@ import {
   PendingIcon,
 } from "../../../assets/svg/AccountsIcons";
 
+interface Business {
+  name: string;
+  email: string;
+  phoneNumber: string;
+  status: string;
+}
+
+const businesses: Business[] = [
+  {
+    name: "Brumpost Media LLC",
+    email: "temitopedml@gmail.com",
+    phoneNumber: "08164626619",
+    status: "Active",
+  },
+  {
+    name: "Brumpost Media LLC",
+    email: "temitopedml@gmail.com",
+    phoneNumber: "08164626619",
+    status: "Active",
+  },
+  {
+    name: "Brumpost Media LLC",
+    email: "temitopedml@gmail.com",
+    phoneNumber: "08164626619",
+    status: "Active",
+  },
+  {
+    name: "Brumpost Media LLC",
+    email: "temitopedml@gmail.com",
+    phoneNumber: "08164626619",
+    status: "Active",
+  },
+  {
+    name: "Brumpost Media LLC",
+    email: "temitopedml@gmail.com",
+    phoneNumber: "08164626619",
+    status: "Active",
+  },
+  {
+    name: "Brumpost Media LLC",
+    email: "temitopedml@gmail.com",
+    phoneNumber: "08164626619",
+    status: "Active",
+  },
+  {
+    name: "Brumpost Media LLC",
+    email: "temitopedml@gmail.com",
+    phoneNumber: "08164626619",
+    status: "Active",
+  },
+];
+interface Notification {
+  title: string;
+  date: string;
+  time: string;
+  type: string;
+}
+
+const notifications: Notification[] = [
+  {
+    title: "Accept Compliance",
+    date: "21 Jul.",
+    time: "08:45PM",
+    type: "Business",
+  },
+  {
+    title: "Accept Compliance",
+    date: "21 Jul.",
+    time: "08:45PM",
+    type: "Business",
+  },
+  {
+    title: "Accept Compliance",
+    date: "21 Jul.",
+    time: "08:45PM",
+    type: "Business",
+  },
+  {
+    title: "Accept Compliance",
+    date: "21 Jul.",
+    time: "08:45PM",
+    type: "Business",
+  },
+  {
+    title: "Accept Compliance",
+    date: "21 Jul.",
+    time: "08:45PM",
+    type: "Business",
+  },
+];
+
 const Dashboard = () => {
   const cards = [
     {
@@ -209,8 +300,8 @@ const Dashboard = () => {
               Earning Report
             </p>
           </span>
-          <div className="flex gap-6 justify-between w-full">
-            <div className="space-y-2 max-w-[200px]">
+          <div className="md:flex gap-6 justify-between w-full">
+            <div className="space-y-2 md:max-w-[200px]">
               <p className="text-[20px] md:text-[32px] font-bold text-[#2E2E3A]">
                 ₦629,394
               </p>
@@ -421,106 +512,25 @@ const Dashboard = () => {
                   <th className="whitespace-nowrap px-4 py-3">Status</th>
                 </tr>
               </thead>
-
               <tbody className="divide-y divide-gray-200 divide-dashed text-[#2E2E3A] font-normal">
-                <tr>
-                  <td className="whitespace-nowrap px-4 py-2 font-bold text-base text-black">
-                    Brumpost Media LLC
-                  </td>
-                  <td className="whitespace-nowrap px-4 py-2 text-[#2E2E3A]">
-                    temitopedml@gmail.com
-                  </td>
-                  <td className="whitespace-nowrap px-4 py-3">08164626619</td>
-                  <td className="whitespace-nowrap px-4 py-3">
-                    <p className="text-[#1CA78B] text-[12px] bg-[#1CA78B0D] px-[10px] py-[4px] rounded-[4px] w-max">
-                      Active
-                    </p>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="whitespace-nowrap px-4 py-2 font-bold text-base text-black">
-                    Brumpost Media LLC
-                  </td>
-                  <td className="whitespace-nowrap px-4 py-2 text-[#2E2E3A]">
-                    temitopedml@gmail.com
-                  </td>
-                  <td className="whitespace-nowrap px-4 py-3">08164626619</td>
-                  <td className="whitespace-nowrap px-4 py-3">
-                    <p className="text-[#1CA78B] text-[12px] bg-[#1CA78B0D] px-[10px] py-[4px] rounded-[4px] w-max">
-                      Active
-                    </p>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="whitespace-nowrap px-4 py-2 font-bold text-base text-black">
-                    Brumpost Media LLC
-                  </td>
-                  <td className="whitespace-nowrap px-4 py-2 text-[#2E2E3A]">
-                    temitopedml@gmail.com
-                  </td>
-                  <td className="whitespace-nowrap px-4 py-3">08164626619</td>
-                  <td className="whitespace-nowrap px-4 py-3">
-                    <p className="text-[#1CA78B] text-[12px] bg-[#1CA78B0D] px-[10px] py-[4px] rounded-[4px] w-max">
-                      Active
-                    </p>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="whitespace-nowrap px-4 py-2 font-bold text-base text-black">
-                    Brumpost Media LLC
-                  </td>
-                  <td className="whitespace-nowrap px-4 py-2 text-[#2E2E3A]">
-                    temitopedml@gmail.com
-                  </td>
-                  <td className="whitespace-nowrap px-4 py-3">08164626619</td>
-                  <td className="whitespace-nowrap px-4 py-3">
-                    <p className="text-[#1CA78B] text-[12px] bg-[#1CA78B0D] px-[10px] py-[4px] rounded-[4px] w-max">
-                      Active
-                    </p>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="whitespace-nowrap px-4 py-2 font-bold text-base text-black">
-                    Brumpost Media LLC
-                  </td>
-                  <td className="whitespace-nowrap px-4 py-2 text-[#2E2E3A]">
-                    temitopedml@gmail.com
-                  </td>
-                  <td className="whitespace-nowrap px-4 py-3">08164626619</td>
-                  <td className="whitespace-nowrap px-4 py-3">
-                    <p className="text-[#1CA78B] text-[12px] bg-[#1CA78B0D] px-[10px] py-[4px] rounded-[4px] w-max">
-                      Active
-                    </p>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="whitespace-nowrap px-4 py-2 font-bold text-base text-black">
-                    Brumpost Media LLC
-                  </td>
-                  <td className="whitespace-nowrap px-4 py-2 text-[#2E2E3A]">
-                    temitopedml@gmail.com
-                  </td>
-                  <td className="whitespace-nowrap px-4 py-3">08164626619</td>
-                  <td className="whitespace-nowrap px-4 py-3">
-                    <p className="text-[#1CA78B] text-[12px] bg-[#1CA78B0D] px-[10px] py-[4px] rounded-[4px] w-max">
-                      Active
-                    </p>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="whitespace-nowrap px-4 py-2 font-bold text-base text-black">
-                    Brumpost Media LLC
-                  </td>
-                  <td className="whitespace-nowrap px-4 py-2 text-[#2E2E3A]">
-                    temitopedml@gmail.com
-                  </td>
-                  <td className="whitespace-nowrap px-4 py-3">08164626619</td>
-                  <td className="whitespace-nowrap px-4 py-3">
-                    <p className="text-[#1CA78B] text-[12px] bg-[#1CA78B0D] px-[10px] py-[4px] rounded-[4px] w-max">
-                      Active
-                    </p>
-                  </td>
-                </tr>
+                {businesses.map((business, index) => (
+                  <tr key={index}>
+                    <td className="whitespace-nowrap px-4 py-2 font-bold text-base text-black">
+                      {business.name}
+                    </td>
+                    <td className="whitespace-nowrap px-4 py-2 text-[#2E2E3A]">
+                      {business.email}
+                    </td>
+                    <td className="whitespace-nowrap px-4 py-3">
+                      {business.phoneNumber}
+                    </td>
+                    <td className="whitespace-nowrap px-4 py-3">
+                      <p className="text-[#1CA78B] text-[12px] bg-[#1CA78B0D] px-[10px] py-[4px] rounded-[4px] w-max">
+                        {business.status}
+                      </p>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
@@ -533,97 +543,29 @@ const Dashboard = () => {
           </p>
 
           {/* items */}
-          <div className="flex flex-col gap-4 justify-between">
-            <div className="flex gap-6 justify-between">
-              <span className="flex flex-col gap-2">
-                <p className="text-base font-bold text-[#2E2E3A]">
-                  Accept Compliance
-                </p>
-                <span className="flex gap-2 text-[#666666] text-[12px] font-bold items-center">
-                  <CalendarIcon />
-                  <p className="">21 Jul.</p>
-                  <p className="">08:45PM</p>
+          {notifications.map((notification, index) => (
+            <div key={index} className="flex flex-col gap-4">
+              {/* flex flex-col gap-4 justify-between */}
+              <div className="flex gap-6 justify-between">
+                <span className="flex flex-col gap-2">
+                  <p className="text-base font-bold text-[#2E2E3A]">
+                    {notification.title}
+                  </p>
+                  <span className="flex gap-2 text-[#666666] text-[12px] font-bold items-center">
+                    <CalendarIcon />
+                    <p>{notification.date}</p>
+                    <p>{notification.time}</p>
+                  </span>
                 </span>
-              </span>
-              <span className="">
-                <p className="text-[#18965A] text-[14px] bg-[#18965A33] px-[10px] py-[5px] rounded-[5px] font-bold">
-                  Business
-                </p>
-              </span>
-            </div>
-            <hr className="border border-dashed" />
-            <div className="flex gap-6 justify-between">
-              <span className="flex flex-col gap-2">
-                <p className="text-base font-bold text-[#2E2E3A]">
-                  Accept Compliance
-                </p>
-                <span className="flex gap-2 text-[#666666] text-[12px] font-bold items-center">
-                  <CalendarIcon />
-                  <p className="">21 Jul.</p>
-                  <p className="">08:45PM</p>
+                <span>
+                  <p className="text-[#18965A] text-[14px] bg-[#18965A33] px-[10px] py-[5px] rounded-[5px] font-bold">
+                    {notification.type}
+                  </p>
                 </span>
-              </span>
-              <span className="">
-                <p className="text-[#18965A] text-[14px] bg-[#18965A33] px-[10px] py-[5px] rounded-[5px] font-bold">
-                  Business
-                </p>
-              </span>
+              </div>
+              <hr className="border border-dashed" />
             </div>
-            <hr className="border border-dashed" />
-            <div className="flex gap-6 justify-between">
-              <span className="flex flex-col gap-2">
-                <p className="text-base font-bold text-[#2E2E3A]">
-                  Accept Compliance
-                </p>
-                <span className="flex gap-2 text-[#666666] text-[12px] font-bold items-center">
-                  <CalendarIcon />
-                  <p className="">21 Jul.</p>
-                  <p className="">08:45PM</p>
-                </span>
-              </span>
-              <span className="">
-                <p className="text-[#18965A] text-[14px] bg-[#18965A33] px-[10px] py-[5px] rounded-[5px] font-bold">
-                  Business
-                </p>
-              </span>
-            </div>
-            <hr className="border border-dashed" />
-            <div className="flex gap-6 justify-between">
-              <span className="flex flex-col gap-2">
-                <p className="text-base font-bold text-[#2E2E3A]">
-                  Accept Compliance
-                </p>
-                <span className="flex gap-2 text-[#666666] text-[12px] font-bold items-center">
-                  <CalendarIcon />
-                  <p className="">21 Jul.</p>
-                  <p className="">08:45PM</p>
-                </span>
-              </span>
-              <span className="">
-                <p className="text-[#18965A] text-[14px] bg-[#18965A33] px-[10px] py-[5px] rounded-[5px] font-bold">
-                  Business
-                </p>
-              </span>
-            </div>
-            <hr className="border border-dashed" />
-            <div className="flex gap-6 justify-between">
-              <span className="flex flex-col gap-2">
-                <p className="text-base font-bold text-[#2E2E3A]">
-                  Accept Compliance
-                </p>
-                <span className="flex gap-2 text-[#666666] text-[12px] font-bold items-center">
-                  <CalendarIcon />
-                  <p className="">21 Jul.</p>
-                  <p className="">08:45PM</p>
-                </span>
-              </span>
-              <span className="">
-                <p className="text-[#18965A] text-[14px] bg-[#18965A33] px-[10px] py-[5px] rounded-[5px] font-bold">
-                  Business
-                </p>
-              </span>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
     </section>
