@@ -10,7 +10,7 @@ import {
 } from "@/assets/svg/AccountsIcons";
 import { HiMiniArrowTrendingUp } from "react-icons/hi2";
 import { FaArrowUp, FaArrowDown } from "react-icons/fa";
-import DashboardChart from "./DashboardChart";
+import { EarningsChart, TransactionsChart } from "./DashboardChart";
 import { CalendarIcon } from "../../../assets/svg/AccountsIcons";
 import {
   InflowIcon,
@@ -229,10 +229,10 @@ const Dashboard = () => {
               </p>
             </div>
 
-            <div className="bg-[#0062FF1A] w-full h-52" />
-            {/* <div className="w-full max-w-[500px]">
-              <DashboardChart />
-            </div> */}
+            <div className="w-full">
+              {/* max-w-[500px] */}
+              <EarningsChart />
+            </div>
           </div>
 
           <div className="bg-[#E5F2FF] p-[20px] rounded-[10px] flex gap-6 justify-between">
@@ -326,7 +326,8 @@ const Dashboard = () => {
             Transaction History
           </p>
 
-          <div className="bg-[#0062FF1A] w-full h-20" />
+          {/* <div className="bg-[#0062FF1A] w-full h-20" /> */}
+          <TransactionsChart />
 
           <div className="flex flex-col gap-4 justify-between">
             <div className="flex gap-6 justify-between">
