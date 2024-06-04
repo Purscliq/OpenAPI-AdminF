@@ -1,4 +1,4 @@
-import ForgotPasswordStep2 from "@/components/forgot-password-step2/ForgotPasswordStep2";
+import ForgotPasswordStep2 from "@/components/auth/forgot-password-step2/ForgotPasswordStep2";
 
 const Page = () => {
   return <ForgotPasswordStep2 />;

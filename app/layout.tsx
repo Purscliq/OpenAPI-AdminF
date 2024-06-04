@@ -1,6 +1,8 @@
+import { AntdRegistry } from "@ant-design/nextjs-registry";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Zen_Kaku_Gothic_Antique } from "next/font/google";
+import StoreProvider from "@/context/StoreProvider";
 
 const zen = Zen_Kaku_Gothic_Antique({
   weight: ["400", "700"],
@@ -19,7 +21,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" data-theme="light">
-      <body className={`${zen.className} !bg-[#FAFAFA]`}>{children}</body>
+      <body className={`${zen.className} !bg-[#FAFAFA]`}>
+        <AntdRegistry>
+          <StoreProvider>{children}</StoreProvider>
+        </AntdRegistry>
+      </body>
     </html>
   );
 }

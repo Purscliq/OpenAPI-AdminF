@@ -1,17 +1,38 @@
 "use client";
-
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
   CustomInput as Input,
   CustomPasswordInput as PasswordInput,
   CustomButton as Button,
 } from "@/lib/AntdComponents";
-import { Form } from "antd";
+import { ChangeEventHandler, useState } from "react";
+import { Form, message } from "antd";
+import { useLoginMutation } from "@/services/auth/index.service";
 
 const Login = () => {
-  const router = useRouter();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const [login, { isLoading }] = useLoginMutation();
 
+  const handleSubmit = () => {
+    login({ ...formData })
+      .unwrap()
+      .then((res) => {
+        message.success("Login successful");
+      })
+      .catch((err) => {
+        message.error(err?.data?.message || "something went wrong");
+      });
+  };
+
+  const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target?.name]: e.target?.value,
+    }));
+  };
   return (
     <div className="min-h-screen flex flex-col justify-center max-w-[1640px] bg-[url('/bg.png')] bg-cover bg-no-repeat p-8 md:p-0">
       <main className=" flex flex-col items-center justify-center bg-white rounded-3xl w-full md:w-[560px] mx-auto px-8 py-16">
@@ -25,7 +46,7 @@ const Login = () => {
             </p>
           </span>
 
-          <Form className="!w-full !space-y-8">
+          <Form onFinish={handleSubmit} className="!w-full !space-y-8">
             <div className="w-full flex flex-col items-start justify-start gap-[0.2rem]">
               <label
                 htmlFor="email"
@@ -37,6 +58,8 @@ const Login = () => {
                 className="w-full "
                 placeholder="Email Address"
                 id="email"
+                value={formData.email}
+                onChange={handleChange}
                 type="email"
                 name="email"
                 size="large"
@@ -52,10 +75,12 @@ const Login = () => {
               </label>
               <PasswordInput
                 className="w-full"
-                placeholder="Enter your password"
                 id="password"
+                placeholder="Enter Password"
                 type="password"
+                value={formData.password}
                 name="password"
+                onChange={handleChange}
                 required
               />
             </div>
@@ -84,9 +109,9 @@ const Login = () => {
 
             <span className="flex justify-center">
               <Button
-                onClick={() => router.push("/dashboard")}
                 htmlType="submit"
                 type="primary"
+                loading={isLoading}
                 className="!h-[3rem] md:text-[18px] !bg-[#010101] w-full md:w-[80%]"
               >
                 Sign In

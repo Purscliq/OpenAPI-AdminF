@@ -3,10 +3,10 @@
     "development"
   ],
   "hints": {
-    "axe/keyboard": [
+    "axe/forms": [
       "default",
       {
-        "nested-interactive": "off"
+        "label": "off"
       }
     ]
   }
