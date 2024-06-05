@@ -15,7 +15,7 @@ const BusinessDetailsTab = () => {
   ];
 
   return (
-    <section className="py-4 grid md:gap-6 gap-4 md:grid-cols-[70%_30%] grid-cols-1">
+    <section className="py-4 grid md:gap-6 gap-4 md:grid-cols-[70%_30%] grid-cols-1 max-w-[1240px]">
       <div className="border border-[#D6DDEB] p-4 flex flex-col gap-3 text-[#32475C99]">
         <h3 className="text-[18px] md:text-[24px] font-bold text-[#25324B]">
           Details

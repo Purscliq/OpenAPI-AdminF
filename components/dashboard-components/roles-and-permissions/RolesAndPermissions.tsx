@@ -1,4 +1,22 @@
 import React from "react";
+import { CustomTabs as Tabs } from "@/lib/AntdComponents";
+import type { TabsProps } from "antd";
+
+import MembersTab from "./Tabs/MembersTab";
+import RolesTab from "./Tabs/RolesTab";
+
+const items: TabsProps["items"] = [
+  {
+    key: "1",
+    label: "Members",
+    children: <MembersTab />,
+  },
+  {
+    key: "2",
+    label: "Roles",
+    children: <RolesTab />,
+  },
+];
 
 const RolesAndPermissions = () => {
   return (
@@ -9,6 +27,10 @@ const RolesAndPermissions = () => {
           Open the panel and watch your progress and growth in knowledge.
         </p>
       </span>
+
+      <div className="bg-white px-4">
+        <Tabs defaultActiveKey="1" items={items} tabBarGutter={15} />
+      </div>
     </section>
   );
 };

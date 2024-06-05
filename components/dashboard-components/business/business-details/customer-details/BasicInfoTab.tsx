@@ -1,6 +1,6 @@
 import React from "react";
 
-const PersonalDetailsTab = () => {
+const BasicInfoTab = () => {
   const details = [
     { label: "First Name", value: "James" },
     { label: "Last Name", value: "James" },
@@ -52,4 +52,4 @@ const PersonalDetailsTab = () => {
   );
 };
 
-export default PersonalDetailsTab;
+export default BasicInfoTab;

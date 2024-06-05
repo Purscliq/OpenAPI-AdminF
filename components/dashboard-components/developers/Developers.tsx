@@ -1,6 +1,48 @@
 import React from "react";
+import { TabsProps } from "antd";
+import { CustomTabs as Tabs } from "@/lib/AntdComponents";
+import { HiMiniArrowTrendingUp } from "react-icons/hi2";
+import APIKeys from "./developers-tab/APIKeys";
+import Webhooks from "./developers-tab/Webhooks";
+import Whitelist from "./developers-tab/Whitelist";
 
 const Developers = () => {
+  const items: TabsProps["items"] = [
+    {
+      key: "1",
+      label: "API Keys",
+      children: <APIKeys />,
+    },
+    {
+      key: "2",
+      label: "Webhooks",
+      children: <Webhooks />,
+    },
+    {
+      key: "3",
+      label: "Whitelist",
+      children: <Whitelist />,
+    },
+  ];
+
+  const cards = [
+    {
+      title: "Total API Keys",
+      value: "40,689",
+      change: "8.5",
+    },
+    {
+      title: "Total Webhook",
+      value: "98,000",
+      change: "1.8",
+    },
+    {
+      title: "Total Whitelist",
+      value: "10,293",
+      change: "1.3",
+    },
+  ];
+
   return (
     <section className="max-w-[1640px] flex flex-col gap-6 bg-[#FAFAFA] px-6 py-4 md:h-screen overflow-y-scroll">
       <span className="">
@@ -9,6 +51,34 @@ const Developers = () => {
           Open the panel and watch your progress and growth in knowledge.
         </p>
       </span>
+
+      <div className="w-full py-3 rounded-lg grid grid-cols-1 md:grid-cols-3 gap-6">
+        {cards.map((item, index) => (
+          <div
+            key={index}
+            className="rounded-md shadow-sm bg-white p-6 min-w-[360px]"
+          >
+            <span className="flex flex-col gap-4">
+              <p className="text-[14px] md:text-base font-bold text-[#202224]">
+                {item.title}
+              </p>
+              <p className="text-[18px] md:text-[24px] font-bold text-[#202224]">
+                {item.value}
+              </p>
+              <p className="text-base font-bold flex gap-2 items-center">
+                <span className="text-[#00B69B] flex gap-2 items-center">
+                  <HiMiniArrowTrendingUp className="w-5 h-5" /> {item.change}%
+                </span>
+                Up from yesterday
+              </p>
+            </span>
+          </div>
+        ))}
+      </div>
+
+      <div className=" bg-white p-3">
+        <Tabs defaultActiveKey="1" items={items} tabBarGutter={15} />
+      </div>
     </section>
   );
 };
