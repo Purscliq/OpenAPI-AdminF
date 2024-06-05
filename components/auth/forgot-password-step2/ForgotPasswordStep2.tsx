@@ -1,12 +1,36 @@
 "use client";
-
-import { useRouter } from "next/navigation";
 import { CustomButton as Button } from "@/lib/AntdComponents";
 import { Form, Input } from "antd";
+import { useForgotPasswordMutation } from "@/services/auth/index.service";
 
 const ForgotPasswordStep2 = () => {
-  const router = useRouter();
+  // const [seconds, setSeconds] = useState(2 * 60);
 
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     if (seconds <= 0) {
+  //       clearInterval(interval);
+  //     } else {
+  //       setSeconds((prevSeconds) => prevSeconds - 1);
+  //     }
+  //   }, 1000);
+  //   return () => clearInterval(interval);
+  // }, [seconds]);
+
+  // const minutes = Math.floor(seconds / 60);
+  // const remainingSeconds = seconds % 60;
+
+  // const resendLink = () => {
+  //     forgotPassword({ email })
+  //       .unwrap()
+  //       .then(() => {
+  //         message.success("Password reset email sent");
+  //         setSeconds(2 * 60);
+  //       })
+  //       .catch((err) => {
+  //         message.error(err?.data?.message);
+  //       });
+  //   };
   return (
     <div className="min-h-screen flex flex-col justify-center max-w-[1640px] bg-[url('/bg.png')] bg-cover bg-no-repeat p-8 md:p-0">
       <main className=" flex flex-col items-center justify-center bg-white rounded-3xl w-full md:w-[560px] mx-auto px-8 py-16">
@@ -33,8 +57,6 @@ const ForgotPasswordStep2 = () => {
 
             <span className="flex justify-center">
               <Button
-                onClick={() => router.push("/reset-password")}
-                htmlType="submit"
                 type="primary"
                 className="!h-[3rem] md:text-[18px] !bg-[#010101] w-full md:w-[80%]"
               >

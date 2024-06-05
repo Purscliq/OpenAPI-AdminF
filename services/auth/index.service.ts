@@ -25,6 +25,33 @@ const authSlice = ApiSlice.enhanceEndpoints({}).injectEndpoints({
           });
       },
     }),
+
+    refresh: builder.mutation({
+      query: (body) => ({
+        url: "auth/login/refresh",
+        method: "POST",
+        body,
+      }),
+    }),
+
+    forgotPassword: builder.mutation({
+      query: (body) => ({
+        url: "auth/forgot-password",
+        method: "POST",
+        body,
+      }),
+    }),
+    resetPassword: builder.mutation({
+      query: (body) => ({
+        url: "auth/update-forgotten-password",
+        method: "POST",
+        body,
+      }),
+    }),
   }),
 });
-export const {useLoginMutation} = authSlice;
+export const {
+  useLoginMutation,
+  useResetPasswordMutation,
+  useForgotPasswordMutation,
+} = authSlice;

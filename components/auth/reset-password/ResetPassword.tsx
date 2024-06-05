@@ -1,17 +1,76 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import {
   CustomInput as Input,
   CustomPasswordInput as PasswordInput,
   CustomButton as Button,
 } from "@/lib/AntdComponents";
-import { Form } from "antd";
+import { Form, message } from "antd";
+import { useResetPasswordMutation } from "@/services/auth/index.service";
+import { ChangeEventHandler, useEffect, useState } from "react";
+import { passwordSchema } from "@/components/helper/PasswordSchema";
 
 const ResetPassword = () => {
-  const router = useRouter();
+  const { replace } = useRouter();
+  const [resetPassword, { isLoading }] = useResetPasswordMutation();
+  const initialState = {
+    password: "",
+    password2: "",
+    email: "",
+    token: "",
+    update_type: "",
+  };
+  const [formData, setFormData] = useState(initialState);
+  const [validationError, setValidationError] = useState("");
+  const [confirmValidationError, setConfirmValidationError] = useState("");
+  const searchParams = useSearchParams();
+  useEffect(() => {
+    const email = searchParams.get("email");
+    const token = searchParams.get("token");
+    const updateType = searchParams.get("update_type");
 
+    setFormData((prev) => ({
+      ...prev,
+      email: email || "",
+      token: token || "",
+      update_type: updateType || "",
+    }));
+  }, [searchParams]);
+  const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    if (e.target.name === "password")
+      passwordSchema
+        .validate({ password: e.target?.value })
+        .then(() => setValidationError(""))
+        .catch((error) => setValidationError(error.message));
+    if (e.target.name === "password2" && e.target.value !== formData.password)
+      setConfirmValidationError("password must match");
+    else if (
+      e.target.name === "password2" &&
+      e.target.value === formData.password
+    )
+      setConfirmValidationError("");
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target?.name]: e.target?.value,
+    }));
+  };
+
+  const handleSubmit = () => {
+    if (!validationError && !confirmValidationError) {
+      resetPassword(formData)
+        .unwrap()
+        .then((res) => {
+          message.success("password updated");
+          setFormData(initialState);
+          replace("login");
+        })
+        .catch((err) => {
+          message.error(err?.data?.message);
+        });
+    }
+  };
   return (
     <div className="min-h-screen flex flex-col justify-center max-w-[1640px] bg-[url('/bg.png')] bg-cover bg-no-repeat p-8 md:p-0">
       <main className=" flex flex-col items-center justify-center bg-white rounded-3xl w-full md:w-[560px] mx-auto px-8 py-16">
@@ -33,14 +92,19 @@ const ResetPassword = () => {
               >
                 New Password
               </label>
+
               <PasswordInput
-                className="w-full"
-                placeholder="Enter your password"
                 id="password"
+                placeholder="Enter Password"
                 type="password"
-                name="password"
                 required
+                value={formData.password}
+                name="password"
+                onChange={handleChange}
               />
+              {formData.password && validationError && (
+                <p className="text-red-500">{validationError}</p>
+              )}
             </div>
 
             <div className="w-full flex flex-col items-start justify-start gap-[0.2rem]">
@@ -50,19 +114,23 @@ const ResetPassword = () => {
               >
                 Confirm Password
               </label>
+
               <PasswordInput
-                className="w-full"
-                placeholder="Enter your password"
                 id="confirmPassword"
+                placeholder="Enter Password"
                 type="password"
-                name="confirmPassword"
                 required
+                value={formData.password}
+                name="password2"
+                onChange={handleChange}
               />
+              {formData.password2 && confirmValidationError && (
+                <p>{validationError}</p>
+              )}
             </div>
 
             <span className="flex justify-center">
               <Button
-                onClick={() => router.push("/")}
                 htmlType="submit"
                 type="primary"
                 className="!h-[3rem] md:text-[18px] !bg-[#010101] w-full md:w-[80%]"
