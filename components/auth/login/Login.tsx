@@ -8,8 +8,10 @@ import {
 import { ChangeEventHandler, useState } from "react";
 import { Form, message } from "antd";
 import { useLoginMutation } from "@/services/auth/index.service";
+import { useRouter } from "next/navigation";
 
 const Login = () => {
+  const { replace } = useRouter();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -21,6 +23,7 @@ const Login = () => {
       .unwrap()
       .then((res) => {
         message.success("Login successful");
+        replace("dashboard");
       })
       .catch((err) => {
         message.error(err?.data?.message || "something went wrong");

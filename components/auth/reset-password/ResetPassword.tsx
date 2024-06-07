@@ -84,7 +84,7 @@ const ResetPassword = () => {
             </p>
           </span>
 
-          <Form className="!w-full !space-y-8">
+          <Form onFinish={handleSubmit} className="!w-full !space-y-8">
             <div className="w-full flex flex-col items-start justify-start gap-[0.2rem]">
               <label
                 htmlFor="password"
