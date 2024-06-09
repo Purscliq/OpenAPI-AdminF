@@ -4,6 +4,7 @@ import type { TabsProps } from "antd";
 
 import MembersTab from "./Tabs/MembersTab";
 import RolesTab from "./Tabs/RolesTab";
+import PermissionsTab from "./Tabs/PermissionsTab";
 
 const items: TabsProps["items"] = [
   {
@@ -15,6 +16,11 @@ const items: TabsProps["items"] = [
     key: "2",
     label: "Roles",
     children: <RolesTab />,
+  },
+  {
+    key: "3",
+    label: "Permissions",
+    children: <PermissionsTab />,
   },
 ];
 
