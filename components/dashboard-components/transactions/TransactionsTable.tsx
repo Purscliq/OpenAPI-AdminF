@@ -1,14 +1,15 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import {
   CustomButton as Button,
   CustomTable as Table,
   CustomSelect as Select,
 } from "@/lib/AntdComponents";
 import type { TableColumnsType } from "antd";
-import { DatePicker } from "antd";
+import { DatePicker, Drawer } from "antd";
 import FilterIcon from "@/assets/svg/FilterIcon";
+import TransactionDrawer from "./TransactionDrawer";
 
 const { RangePicker } = DatePicker;
 
@@ -27,52 +28,6 @@ const statusClasses: { [key: string]: string } = {
   Pending: "text-[#FFD03A] bg-[#FFD03A1A]",
   Failed: "text-[#F6513B] bg-[#F6513B1A]",
 };
-
-const columns: TableColumnsType<DataType> = [
-  {
-    title: "Date",
-    dataIndex: "date",
-    sorter: true,
-  },
-  {
-    title: "Account Name",
-    dataIndex: "accountName",
-    sorter: true,
-  },
-  {
-    title: "Bank Name",
-    dataIndex: "bankName",
-    sorter: true,
-  },
-  {
-    title: "Account Number",
-    dataIndex: "accountNumber",
-    sorter: true,
-  },
-  {
-    title: "Amount",
-    dataIndex: "amount",
-    sorter: true,
-  },
-
-  {
-    title: (
-      <span className="flex items-center">
-        <p>Status</p>
-      </span>
-    ),
-    dataIndex: "status",
-    sorter: true,
-    render: (_: any, record: DataType) => {
-      const statusClass = statusClasses[record.status] || "text-gray-500";
-      return (
-        <span className={`text-[14px] p-2 rounded-full ${statusClass}`}>
-          {record.status}
-        </span>
-      );
-    },
-  },
-];
 
 const data: DataType[] = [
   {
@@ -105,6 +60,76 @@ const data: DataType[] = [
 ];
 
 const TransactionsTable = () => {
+  const [open, setOpen] = useState(false);
+
+  const showDrawer = () => {
+    setOpen(true);
+  };
+
+  const onClose = () => {
+    setOpen(false);
+  };
+
+  const columns: TableColumnsType<DataType> = [
+    {
+      title: "Date",
+      dataIndex: "date",
+      sorter: true,
+    },
+    {
+      title: "Account Name",
+      dataIndex: "accountName",
+      sorter: true,
+    },
+    {
+      title: "Bank Name",
+      dataIndex: "bankName",
+      sorter: true,
+    },
+    {
+      title: "Account Number",
+      dataIndex: "accountNumber",
+      sorter: true,
+    },
+    {
+      title: "Amount",
+      dataIndex: "amount",
+      sorter: true,
+    },
+
+    {
+      title: (
+        <span className="flex items-center">
+          <p>Status</p>
+        </span>
+      ),
+      dataIndex: "status",
+      sorter: true,
+      render: (_: any, record: DataType) => {
+        const statusClass = statusClasses[record.status] || "text-gray-500";
+        return (
+          <span className={`text-[14px] p-2 rounded-full ${statusClass}`}>
+            {record.status}
+          </span>
+        );
+      },
+    },
+    {
+      title: <></>,
+      dataIndex: "id",
+      render: (_: any, _record: DataType) => (
+        <button
+          type="button"
+          className="text-lg font-semibold"
+          title="Details"
+          onClick={showDrawer}
+        >
+          ...
+        </button>
+      ),
+    },
+  ];
+
   return (
     <section className="max-w-[1640px] h-full overflow-x-scroll md:overflow-x-clip bg-white p-6 rounded-lg space-y-4">
       <p className="font-bold text-base">Transaction History</p>
@@ -129,6 +154,7 @@ const TransactionsTable = () => {
       </div>
 
       <Table columns={columns} dataSource={data} />
+      <TransactionDrawer open={open} onClose={onClose} />
     </section>
   );
 };
