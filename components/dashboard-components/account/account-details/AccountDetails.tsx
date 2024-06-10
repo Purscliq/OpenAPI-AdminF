@@ -8,6 +8,7 @@ import { TabsProps } from "antd";
 import { GoArrowLeft } from "react-icons/go";
 import AccountDetailsTab from "./AccountDetailsTab";
 import SubAccountTab from "./SubAccountTab";
+import LoanAccountTab from "./LoanAccountTab";
 
 const AccountDetails = () => {
   const router = useRouter();
@@ -22,6 +23,11 @@ const AccountDetails = () => {
       key: "2",
       label: "Sub Account",
       children: <SubAccountTab />,
+    },
+    {
+      key: "3",
+      label: "Loan Account",
+      children: <LoanAccountTab />,
     },
   ];
 

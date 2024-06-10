@@ -4,6 +4,7 @@ import React from "react";
 import {
   CustomButton as Button,
   CustomTable as Table,
+  CustomSelect as Select,
 } from "@/lib/AntdComponents";
 import { Dropdown } from "antd";
 import type { TableColumnsType, MenuProps } from "antd";
@@ -12,6 +13,7 @@ import Link from "next/link";
 
 interface DataType {
   key: React.Key;
+  businessName: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -26,6 +28,11 @@ const items: MenuProps["items"] = [
 ];
 
 const columns: TableColumnsType<DataType> = [
+  {
+    title: "Business Name",
+    dataIndex: "businessName",
+    sorter: true,
+  },
   {
     title: "First Name",
     dataIndex: "firstName",
@@ -66,6 +73,7 @@ const columns: TableColumnsType<DataType> = [
 const data: DataType[] = [
   {
     key: "1",
+    businessName: "X",
     firstName: "Temitope",
     lastName: "Williams",
     email: "temitopedml@gmail.com",
@@ -73,6 +81,7 @@ const data: DataType[] = [
   },
   {
     key: "2",
+    businessName: "X",
     firstName: "Temitope",
     lastName: "Williams",
     email: "temitopedml@gmail.com",
@@ -80,6 +89,7 @@ const data: DataType[] = [
   },
   {
     key: "3",
+    businessName: "X",
     firstName: "Temitope",
     lastName: "Williams",
     email: "temitopedml@gmail.com",
@@ -87,6 +97,7 @@ const data: DataType[] = [
   },
   {
     key: "4",
+    businessName: "X",
     firstName: "Temitope",
     lastName: "Williams",
     email: "temitopedml@gmail.com",
@@ -94,6 +105,7 @@ const data: DataType[] = [
   },
   {
     key: "5",
+    businessName: "X",
     firstName: "Temitope",
     lastName: "Williams",
     email: "temitopedml@gmail.com",
@@ -104,7 +116,36 @@ const data: DataType[] = [
 const ComplianceTable = () => {
   return (
     <section className="max-w-[1640px] h-full overflow-x-scroll md:overflow-x-clip bg-white p-6 rounded-lg space-y-4">
-      <div className="flex justify-end">
+      <div className="md:flex space-y-4 md:space-y-0 gap-8 justify-between">
+        <span className="flex gap-4">
+          <Select
+            placeholder="Business Name"
+            // style={{ width: 120 }}
+            options={[
+              { value: "1", label: "1" },
+              { value: "2", label: "2" },
+              { value: "3", label: "3" },
+            ]}
+          />
+          <Select
+            placeholder="Name"
+            // style={{ width: 120 }}
+            options={[
+              { value: "1", label: "1" },
+              { value: "2", label: "2" },
+              { value: "3", label: "3" },
+            ]}
+          />
+          <Select
+            placeholder="Email"
+            // style={{ width: 120 }}
+            options={[
+              { value: "1", label: "1" },
+              { value: "2", label: "2" },
+              { value: "3", label: "3" },
+            ]}
+          />
+        </span>
         <Button className="flex gap-2 items-center !border border-[#B8C9C9] rounded-md px-3 py-2">
           <FilterIcon className="w-5 h-5" />
           Filter
