@@ -48,10 +48,19 @@ const authSlice = ApiSlice.enhanceEndpoints({}).injectEndpoints({
         body,
       }),
     }),
+    getDashbaord: builder.query({
+      query: () => ({
+        url: "admin/dashboard",
+        method: "GET",
+      }),
+    }),
   }),
 });
 export const {
   useLoginMutation,
   useResetPasswordMutation,
   useForgotPasswordMutation,
+  useGetDashbaordQuery,
+  useLazyGetDashbaordQuery
 } = authSlice;
+

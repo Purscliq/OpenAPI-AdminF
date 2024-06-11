@@ -7,6 +7,7 @@ import TransactionsIcon from "@/assets/svg/TransactionsIcon";
 import RolesIcon from "@/assets/svg/RolesIcon";
 import SettingsIcon from "@/assets/svg/SettingsIcon";
 import LogOutIcon from "@/assets/svg/LogOutIcon";
+import { logout } from "../helper/Authh";
 
 export const sidebarData1: MenuProps["items"] = [
   {
@@ -55,6 +56,7 @@ export const sidebarData2: MenuProps["items"] = [
     label: <Link href="/">Log Out</Link>,
     icon: <LogOutIcon className=" font-bold text-[#7C8493] w-5 h-5" />,
     key: "logout",
+    onClick: logout,
   },
 ];
 export const activeKeys = [

@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Image from "next/image";
 import Emoji from "@/assets/png/Happy-Emoji-PNG 1.png";
@@ -17,6 +18,7 @@ import {
   OutflowIcon,
   PendingIcon,
 } from "../../../assets/svg/AccountsIcons";
+import { useGetDashbaordQuery } from "@/services/auth/index.service";
 
 interface Business {
   name: string;
@@ -110,37 +112,38 @@ const notifications: Notification[] = [
 ];
 
 const Dashboard = () => {
+  const { data, isLoading } = useGetDashbaordQuery({});
+
   const cards = [
     {
       title: "Total User",
-      value: "40,689",
-      change: "8.5",
+      value: data?.data?.total_user?.count || "0",
+      change: data?.data?.total_user?.pf || "0",
       iconBgColor: "#8280FF",
       icon: <PeopleIcon />,
     },
     {
       title: "Total Collection",
-      value: "10,293",
-      change: "1.8",
+      value: data?.data?.collections?.total || "0",
+      change: data?.data?.collections?.pf || "0",
       iconBgColor: "#FF9066",
       icon: <BoxIcon />,
     },
     {
       title: "Total Disbursement",
-      value: "89,000",
-      change: "1.3",
+      value: data?.data?.disbursements?.total || "0",
+      change: data?.data?.disbursements?.pf || "0",
       iconBgColor: "#4AD991",
       icon: <ChartIcon />,
     },
     {
       title: "Total Transaction",
-      value: "98,000",
-      change: "1.3",
+      value: data?.data?.all_transactions?.total || "0",
+      change: data?.data?.all_transactions?.pf || "0",
       iconBgColor: "#FEC53D",
       icon: <HistoryIcon />,
     },
   ];
-
   return (
     <section className="max-w-[1640px] flex flex-col gap-6 bg-[#FAFAFA] px-6 py-4 pb-8 md:h-screen overflow-y-scroll">
       <span className="">
@@ -208,7 +211,7 @@ const Dashboard = () => {
                   Total Account
                 </p>
                 <p className="text-[18px] md:text-[24px] font-bold text-[#32475CDE]">
-                  420
+                  {data?.data?.account?.count || "0"}{" "}
                 </p>
                 <p className="text-base font-bold flex gap-2 items-center">
                   <span className="text-[#71DD37] flex gap-2 items-center">
@@ -224,7 +227,7 @@ const Dashboard = () => {
                         fill="#71DD37"
                       />
                     </svg>
-                    52.18%
+                    {data?.data?.account?.pf || "0"}%
                   </span>
                 </p>
               </span>
@@ -235,7 +238,7 @@ const Dashboard = () => {
                   Total Sub-Account
                 </p>
                 <p className="text-[18px] md:text-[24px] font-bold text-[#32475CDE]">
-                  570
+                  {data?.data?.sub_account?.count || "0"}{" "}
                 </p>
                 <p className="text-base font-bold flex gap-2 items-center">
                   <span className="text-[#71DD37] flex gap-2 items-center">
@@ -251,7 +254,7 @@ const Dashboard = () => {
                         fill="#71DD37"
                       />
                     </svg>
-                    52.18%
+                    {data?.data?.sub_account?.pf || "0"}%
                   </span>
                 </p>
               </span>
@@ -268,9 +271,11 @@ const Dashboard = () => {
                 </p>
                 <span className=" flex gap-2 items-center">
                   <p className="text-[20px] md:text-[28px] lg:text-[32px] font-bold text-[#2E2E3A]">
-                    44.10K
+                    {data?.data?.api_calls?.count || "0"}
                   </p>
-                  <p className="text-[12px] font-bold text-[#00B69B]">+ 1.3%</p>
+                  <p className="text-[12px] font-bold text-[#00B69B]">
+                    + {data?.data?.api_calls?.pf || "0"}%
+                  </p>
                 </span>
               </span>
             </div>
@@ -283,9 +288,11 @@ const Dashboard = () => {
                 </p>
                 <span className=" flex gap-2 items-center">
                   <p className="text-[20px] md:text-[28px] lg:text-[32px] font-bold text-[#2E2E3A]">
-                    44.10K
+                    {data?.data?.transfers?.total || "0"}{" "}
                   </p>
-                  <p className="text-[12px] font-bold text-[#00B69B]">+ 1.3%</p>
+                  <p className="text-[12px] font-bold text-[#00B69B]">
+                    + {data?.data?.transfers?.pf || "0"}%
+                  </p>
                 </span>
               </span>
             </div>

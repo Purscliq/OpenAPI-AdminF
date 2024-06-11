@@ -7,7 +7,10 @@ import {
 } from "@/lib/AntdComponents";
 import { ChangeEventHandler, useState } from "react";
 import { Form, message } from "antd";
-import { useLoginMutation } from "@/services/auth/index.service";
+import {
+  useLazyGetDashbaordQuery,
+  useLoginMutation,
+} from "@/services/auth/index.service";
 import { useRouter } from "next/navigation";
 
 const Login = () => {
@@ -17,17 +20,17 @@ const Login = () => {
     password: "",
   });
   const [login, { isLoading }] = useLoginMutation();
+  const [fetchDashboardData] = useLazyGetDashbaordQuery();
 
-  const handleSubmit = () => {
-    login({ ...formData })
-      .unwrap()
-      .then((res) => {
-        message.success("Login successful");
-        replace("dashboard");
-      })
-      .catch((err) => {
-        message.error(err?.data?.message || "something went wrong");
-      });
+  const handleSubmit = async () => {
+    try {
+      await login({ ...formData })
+      message.success("Login successful");
+      await fetchDashboardData({});
+      replace("dashboard");
+    } catch (err: any) {
+      message.error(err?.data?.message || "Something went wrong");
+    }
   };
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
