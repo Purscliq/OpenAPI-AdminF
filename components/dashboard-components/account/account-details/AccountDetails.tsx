@@ -2,30 +2,32 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
-
 import { CustomTabs as Tabs } from "@/lib/AntdComponents";
 import { TabsProps } from "antd";
 import { GoArrowLeft } from "react-icons/go";
 import AccountDetailsTab from "./AccountDetailsTab";
 import SubAccountTab from "./SubAccountTab";
 import LoanAccountTab from "./LoanAccountTab";
+import { useGetsingleAccountDetailsQuery } from "@/services/auth/index.service";
 
 const AccountDetails = () => {
   const router = useRouter();
+  const id = sessionStorage.getItem("account_id");
+  const { data: account, isLoading } = useGetsingleAccountDetailsQuery(id);
 
   const items: TabsProps["items"] = [
+    // {
+    //   key: "1",
+    //   label: "Account Details",
+    //   children: <AccountDetailsTab />,
+    // },
     {
       key: "1",
-      label: "Account Details",
-      children: <AccountDetailsTab />,
+      label: "Sub Account",
+      children: <SubAccountTab data={account?.data?.sub_accounts || []} />,
     },
     {
       key: "2",
-      label: "Sub Account",
-      children: <SubAccountTab />,
-    },
-    {
-      key: "3",
       label: "Loan Account",
       children: <LoanAccountTab />,
     },

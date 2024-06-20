@@ -1,6 +1,3 @@
-"use client";
-
-import React from "react";
 import {
   CustomButton as Button,
   CustomTable as Table,
@@ -9,13 +6,14 @@ import { Dropdown } from "antd";
 import type { TableColumnsType, MenuProps } from "antd";
 import FilterIcon from "@/assets/svg/FilterIcon";
 import Link from "next/link";
+import { useGetAlAccountQuery } from "@/services/auth/index.service";
 
 interface DataType {
-  key: React.Key;
-  bankName: string;
-  accountName: string;
-  accountNumber: number;
-  alias: string;
+  id: number;
+  bank_name: string;
+  account_name: string;
+  account_number: number;
+  account_type: string;
 }
 
 const items: MenuProps["items"] = [
@@ -28,22 +26,22 @@ const items: MenuProps["items"] = [
 const columns: TableColumnsType<DataType> = [
   {
     title: "Bank Name",
-    dataIndex: "bankName",
+    dataIndex: "bank_name",
     sorter: true,
   },
   {
     title: "Account Name",
-    dataIndex: "accountName",
+    dataIndex: "account_name",
     sorter: true,
   },
   {
     title: "Account Number",
-    dataIndex: "accountNumber",
+    dataIndex: "account_number",
     sorter: true,
   },
   {
-    title: "Alias",
-    dataIndex: "alias",
+    title: "Account Type",
+    dataIndex: "account_type",
     sorter: true,
   },
 
@@ -54,9 +52,13 @@ const columns: TableColumnsType<DataType> = [
       </span>
     ),
     dataIndex: "id",
-    render: (_: any, _record: DataType) => (
-      <Dropdown menu={{ items }} placement="bottomRight">
-        <button type="button" className="text-lg font-semibold">
+    render: (id: any, _record: DataType) => (
+      <Dropdown menu={{ items }} placement="bottomRight" trigger={["click"]}>
+        <button
+          type="button"
+          className="text-lg font-semibold"
+          onClick={() => sessionStorage.setItem("account_id", id)}
+        >
           ...
         </button>
       </Dropdown>
@@ -64,45 +66,9 @@ const columns: TableColumnsType<DataType> = [
   },
 ];
 
-const data: DataType[] = [
-  {
-    key: "1",
-    bankName: "Providus Bank",
-    accountName: "Williams Temitope",
-    accountNumber: 123456789,
-    alias: "Main Account",
-  },
-  {
-    key: "2",
-    bankName: "Providus Bank",
-    accountName: "Williams Temitope",
-    accountNumber: 123456789,
-    alias: "Main Account",
-  },
-  {
-    key: "3",
-    bankName: "Providus Bank",
-    accountName: "Williams Temitope",
-    accountNumber: 123456789,
-    alias: "Main Account",
-  },
-  {
-    key: "4",
-    bankName: "Providus Bank",
-    accountName: "Williams Temitope",
-    accountNumber: 123456789,
-    alias: "Main Account",
-  },
-  {
-    key: "5",
-    bankName: "Providus Bank",
-    accountName: "Williams Temitope",
-    accountNumber: 123456789,
-    alias: "Main Account",
-  },
-];
-
 const AccountTable = () => {
+  const { data: account, isLoading } = useGetAlAccountQuery({});
+
   return (
     <section className="max-w-[1640px] h-full overflow-x-scroll md:overflow-x-clip bg-white p-6 rounded-lg space-y-4">
       <div className="flex gap-8 justify-between items-center">
@@ -113,7 +79,12 @@ const AccountTable = () => {
         </Button>
       </div>
 
-      <Table columns={columns} dataSource={data} />
+      <Table
+        columns={columns}
+        dataSource={account?.data}
+        loading={isLoading}
+        pagination={{ pageSize: 5 }}
+      />
     </section>
   );
 };

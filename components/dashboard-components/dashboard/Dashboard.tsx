@@ -18,101 +18,20 @@ import {
   OutflowIcon,
   PendingIcon,
 } from "../../../assets/svg/AccountsIcons";
-import { useGetDashbaordQuery } from "@/services/auth/index.service";
+import {
+  useGetDashbaordQuery,
+  useGetNotificationQuery,
+  useGetRecentBusinessQuery,
+} from "@/services/auth/index.service";
+import { formatDate } from "@/components/helper/dateFormat";
+import { Skeleton } from "antd";
 
-interface Business {
-  name: string;
-  email: string;
-  phoneNumber: string;
-  status: string;
-}
-
-const businesses: Business[] = [
-  {
-    name: "Brumpost Media LLC",
-    email: "temitopedml@gmail.com",
-    phoneNumber: "08164626619",
-    status: "Active",
-  },
-  {
-    name: "Brumpost Media LLC",
-    email: "temitopedml@gmail.com",
-    phoneNumber: "08164626619",
-    status: "Active",
-  },
-  {
-    name: "Brumpost Media LLC",
-    email: "temitopedml@gmail.com",
-    phoneNumber: "08164626619",
-    status: "Active",
-  },
-  {
-    name: "Brumpost Media LLC",
-    email: "temitopedml@gmail.com",
-    phoneNumber: "08164626619",
-    status: "Active",
-  },
-  {
-    name: "Brumpost Media LLC",
-    email: "temitopedml@gmail.com",
-    phoneNumber: "08164626619",
-    status: "Active",
-  },
-  {
-    name: "Brumpost Media LLC",
-    email: "temitopedml@gmail.com",
-    phoneNumber: "08164626619",
-    status: "Active",
-  },
-  {
-    name: "Brumpost Media LLC",
-    email: "temitopedml@gmail.com",
-    phoneNumber: "08164626619",
-    status: "Active",
-  },
-];
-interface Notification {
-  title: string;
-  date: string;
-  time: string;
-  type: string;
-}
-
-const notifications: Notification[] = [
-  {
-    title: "Accept Compliance",
-    date: "21 Jul.",
-    time: "08:45PM",
-    type: "Business",
-  },
-  {
-    title: "Accept Compliance",
-    date: "21 Jul.",
-    time: "08:45PM",
-    type: "Business",
-  },
-  {
-    title: "Accept Compliance",
-    date: "21 Jul.",
-    time: "08:45PM",
-    type: "Business",
-  },
-  {
-    title: "Accept Compliance",
-    date: "21 Jul.",
-    time: "08:45PM",
-    type: "Business",
-  },
-  {
-    title: "Accept Compliance",
-    date: "21 Jul.",
-    time: "08:45PM",
-    type: "Business",
-  },
-];
 
 const Dashboard = () => {
-  const { data, isLoading } = useGetDashbaordQuery({});
+  const { data } = useGetDashbaordQuery({});
+  const { data: notification, isLoading } = useGetNotificationQuery({});
+  const { data: business, isLoading: isBusinessloading } =
+    useGetRecentBusinessQuery({});
 
   const cards = [
     {
@@ -519,25 +438,30 @@ const Dashboard = () => {
                   <th className="whitespace-nowrap px-4 py-3">Status</th>
                 </tr>
               </thead>
+
               <tbody className="divide-y divide-gray-200 divide-dashed text-[#2E2E3A] font-normal">
-                {businesses.map((business, index) => (
-                  <tr key={index}>
-                    <td className="whitespace-nowrap px-4 py-2 font-bold text-base text-black">
-                      {business.name}
-                    </td>
-                    <td className="whitespace-nowrap px-4 py-2 text-[#2E2E3A]">
-                      {business.email}
-                    </td>
-                    <td className="whitespace-nowrap px-4 py-3">
-                      {business.phoneNumber}
-                    </td>
-                    <td className="whitespace-nowrap px-4 py-3">
-                      <p className="text-[#1CA78B] text-[12px] bg-[#1CA78B0D] px-[10px] py-[4px] rounded-[4px] w-max">
-                        {business.status}
-                      </p>
-                    </td>
-                  </tr>
-                ))}
+                {isBusinessloading ? (
+                  <Skeleton active />
+                ) : (
+                  business?.data.map((business: any, index: any) => (
+                    <tr key={index}>
+                      <td className="whitespace-nowrap px-4 py-2 font-bold text-base text-black">
+                        {business.name}
+                      </td>
+                      <td className="whitespace-nowrap px-4 py-2 text-[#2E2E3A]">
+                        {business.support_email}
+                      </td>
+                      <td className="whitespace-nowrap px-4 py-3">
+                        {business.support_phone}
+                      </td>
+                      <td className="whitespace-nowrap px-4 py-3">
+                        <p className="text-[#1CA78B] text-[12px] bg-[#1CA78B0D] px-[10px] py-[4px] rounded-[4px] w-max">
+                          {business.status}
+                        </p>
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>
@@ -550,29 +474,44 @@ const Dashboard = () => {
           </p>
 
           {/* items */}
-          {notifications.map((notification, index) => (
-            <div key={index} className="flex flex-col gap-4">
-              {/* flex flex-col gap-4 justify-between */}
-              <div className="flex gap-6 justify-between">
-                <span className="flex flex-col gap-2">
-                  <p className="text-base font-bold text-[#2E2E3A]">
-                    {notification.title}
-                  </p>
-                  <span className="flex gap-2 text-[#666666] text-[12px] font-bold items-center">
-                    <CalendarIcon />
-                    <p>{notification.date}</p>
-                    <p>{notification.time}</p>
-                  </span>
-                </span>
-                <span>
-                  <p className="text-[#18965A] text-[14px] bg-[#18965A33] px-[10px] py-[5px] rounded-[5px] font-bold">
-                    {notification.type}
-                  </p>
-                </span>
+          <div>
+            {isLoading ? (
+              <div className="flex flex-col items-center justify-center">
+                <Skeleton active />
               </div>
-              <hr className="border border-dashed" />
-            </div>
-          ))}
+            ) : notification?.data.length > 0 ? (
+              notification.data.map((x: any, index: any) => (
+                <div key={index} className="flex flex-col gap-4">
+                  <div className="flex gap-6 justify-between">
+                    <span className="flex flex-col gap-2">
+                      <p className="text-base font-bold text-[#2E2E3A]">
+                        {x.title}
+                      </p>
+                      <p className="text-base font-medium text-[#2E2E3A]">
+                        {x.description}
+                      </p>
+                      <span className="flex gap-2 text-[#666666] text-[12px] font-bold items-center">
+                        <CalendarIcon />
+                        <p>{formatDate(x.created_at)}</p>
+                      </span>
+                    </span>
+                    <span>
+                      <p className="text-[#18965A] text-[14px] bg-[#18965A33] px-[10px] py-[5px] rounded-[5px] font-bold">
+                        {x.notification_type}
+                      </p>
+                    </span>
+                  </div>
+                  <hr className="border border-dashed" />
+                </div>
+              ))
+            ) : (
+              <div className="flex flex-col items-center justify-center">
+                <p className="text-base font-medium text-[#2E2E3A] mt-4">
+                  No Notifications
+                </p>
+              </div>
+            )}
+          </div>
         </div>
       </section>
     </section>

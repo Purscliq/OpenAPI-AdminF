@@ -39,24 +39,7 @@ const columns: TableColumnsType<DataType> = [
   },
 ];
 
-const data: DataType[] = [
-  {
-    key: "1",
-    accountName: "Test",
-    currentBalance: "NGN 1.00",
-    id: 1,
-    date: "22-04-24",
-  },
-  {
-    key: "2",
-    accountName: "Other",
-    currentBalance: "NGN 2.00",
-    id: 2,
-    date: "22-04-24",
-  },
-];
-
-const SubAccountTab = () => {
+const SubAccountTab = ({ data }: any) => {
   return (
     <section className="max-w-[1640px] overflow-x-scroll bg-white py-6 rounded-lg space-y-4">
       <div className="flex gap-8 justify-between items-center">
@@ -67,7 +50,7 @@ const SubAccountTab = () => {
         </Button>
       </div>
 
-      <Table columns={columns} dataSource={data} />
+      <Table columns={columns} dataSource={data || []} />
     </section>
   );
 };

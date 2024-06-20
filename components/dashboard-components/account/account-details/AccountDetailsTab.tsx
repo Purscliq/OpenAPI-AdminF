@@ -1,6 +1,8 @@
+import { useGetsingleAccountDetailsQuery } from "@/services/auth/index.service";
 import React from "react";
 
 const AccountDetailsTab = () => {
+ 
   const details = [
     { label: "Bank Name", value: "James" },
     { label: "Account Name", value: "James" },

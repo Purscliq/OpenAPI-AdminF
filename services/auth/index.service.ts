@@ -54,6 +54,42 @@ const authSlice = ApiSlice.enhanceEndpoints({}).injectEndpoints({
         method: "GET",
       }),
     }),
+    getNotification: builder.query({
+      query: () => ({
+        url: "admin/notifications?limit=5",
+        method: "GET",
+      }),
+    }),
+    getRecentBusiness: builder.query({
+      query: () => ({
+        url: "business/all?limit=5",
+        method: "GET",
+      }),
+    }),
+    getCompliance: builder.query({
+      query: () => ({
+        url: "admin/compliance/businesses",
+        method: "GET",
+      }),
+    }),
+    getAccountSumarry: builder.query({
+      query: () => ({
+        url: "admin/accounts/summary",
+        method: "GET",
+      }),
+    }),
+    getAlAccount: builder.query({
+      query: () => ({
+        url: "admin/accounts",
+        method: "GET",
+      }),
+    }),
+    getsingleAccountDetails: builder.query({
+      query: (id) => ({
+        url: `admin/accounts/${id}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 export const {
@@ -61,6 +97,11 @@ export const {
   useResetPasswordMutation,
   useForgotPasswordMutation,
   useGetDashbaordQuery,
-  useLazyGetDashbaordQuery
+  useLazyGetDashbaordQuery,
+  useGetNotificationQuery,
+  useGetRecentBusinessQuery,
+  useGetComplianceQuery,
+  useGetAccountSumarryQuery,
+  useGetAlAccountQuery,
+  useGetsingleAccountDetailsQuery,
 } = authSlice;
-

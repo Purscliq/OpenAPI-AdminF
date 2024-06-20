@@ -1,28 +1,31 @@
-import React from "react";
+"use client";
 import AccountTable from "./AccountTable";
 import { BoxIcon, HistoryIcon, PeopleIcon } from "@/assets/svg/AccountsIcons";
 import { HiMiniArrowTrendingUp } from "react-icons/hi2";
+import { useGetAccountSumarryQuery } from "@/services/auth/index.service";
 
 const Account = () => {
+  const { data, isLoading } = useGetAccountSumarryQuery({});
+
   const cards = [
     {
       title: "Total Account",
-      value: "40,689",
-      change: "8.5",
+      value: data?.data?.total_count?.count || "0",
+      change: data?.data?.total_count?.pf || "0",
       iconBgColor: "#8280FF",
       icon: <PeopleIcon />,
     },
     {
       title: "Total Active Account",
-      value: "98,000",
-      change: "1.8",
+      value: data?.data?.total_active?.count || "0",
+      change: data?.data?.total_active?.pf || "0",
       iconBgColor: "#FF9066",
       icon: <HistoryIcon />,
     },
     {
       title: "Total Inactive Account",
-      value: "10,293",
-      change: "1.3",
+      value: data?.data?.total_inactive?.count || "0",
+      change: data?.data?.total_inactive?.pf || "0",
       iconBgColor: "#FEC53D",
       icon: <BoxIcon />,
     },

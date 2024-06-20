@@ -10,14 +10,15 @@ import { Dropdown } from "antd";
 import type { TableColumnsType, MenuProps } from "antd";
 import FilterIcon from "@/assets/svg/FilterIcon";
 import Link from "next/link";
+import { useGetComplianceQuery } from "@/services/auth/index.service";
 
 interface DataType {
   key: React.Key;
-  businessName: string;
-  firstName: string;
-  lastName: string;
+  business_id: number;
+  first_name: string;
+  last_name: string;
+  business_name: string;
   email: string;
-  phone: number;
 }
 
 const items: MenuProps["items"] = [
@@ -30,27 +31,22 @@ const items: MenuProps["items"] = [
 const columns: TableColumnsType<DataType> = [
   {
     title: "Business Name",
-    dataIndex: "businessName",
+    dataIndex: "business_name",
     sorter: true,
   },
   {
     title: "First Name",
-    dataIndex: "firstName",
+    dataIndex: "first_name",
     sorter: true,
   },
   {
     title: "Last Name",
-    dataIndex: "lastName",
+    dataIndex: "last_name",
     sorter: true,
   },
   {
     title: "Email",
     dataIndex: "email",
-    sorter: true,
-  },
-  {
-    title: "Phone Number",
-    dataIndex: "phone",
     sorter: true,
   },
   {
@@ -70,53 +66,12 @@ const columns: TableColumnsType<DataType> = [
   },
 ];
 
-const data: DataType[] = [
-  {
-    key: "1",
-    businessName: "X",
-    firstName: "Temitope",
-    lastName: "Williams",
-    email: "temitopedml@gmail.com",
-    phone: 80164636619,
-  },
-  {
-    key: "2",
-    businessName: "X",
-    firstName: "Temitope",
-    lastName: "Williams",
-    email: "temitopedml@gmail.com",
-    phone: 80164636619,
-  },
-  {
-    key: "3",
-    businessName: "X",
-    firstName: "Temitope",
-    lastName: "Williams",
-    email: "temitopedml@gmail.com",
-    phone: 80164636619,
-  },
-  {
-    key: "4",
-    businessName: "X",
-    firstName: "Temitope",
-    lastName: "Williams",
-    email: "temitopedml@gmail.com",
-    phone: 80164636619,
-  },
-  {
-    key: "5",
-    businessName: "X",
-    firstName: "Temitope",
-    lastName: "Williams",
-    email: "temitopedml@gmail.com",
-    phone: 80164636619,
-  },
-];
-
 const ComplianceTable = () => {
+  const { data: compliance, isLoading } = useGetComplianceQuery({});
+
   return (
     <section className="max-w-[1640px] h-full overflow-x-scroll md:overflow-x-clip bg-white p-6 rounded-lg space-y-4">
-      <div className="md:flex space-y-4 md:space-y-0 gap-8 justify-between">
+      {/* <div className="md:flex space-y-4 md:space-y-0 gap-8 justify-between">
         <span className="flex gap-4">
           <Select
             placeholder="Business Name"
@@ -150,9 +105,13 @@ const ComplianceTable = () => {
           <FilterIcon className="w-5 h-5" />
           Filter
         </Button>
-      </div>
+      </div> */}
 
-      <Table columns={columns} dataSource={data} />
+      <Table
+        columns={columns}
+        dataSource={compliance?.data}
+        loading={isLoading}
+      />
     </section>
   );
 };
