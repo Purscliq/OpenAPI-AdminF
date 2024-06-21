@@ -7,56 +7,42 @@ import {
 } from "@/lib/AntdComponents";
 import type { TableColumnsType } from "antd";
 import FilterIcon from "@/assets/svg/FilterIcon";
-
+import { formatDate } from "@/components/helper/dateFormat";
 interface DataType {
   key: React.Key;
-  accountName: string;
   id: number;
-  balance: string;
+  account_name: string;
+  current_balance: string;
   date: string;
 }
 
 const columns: TableColumnsType<DataType> = [
   {
     title: "Account Name",
-    dataIndex: "accountName",
+    dataIndex: "account_name",
     sorter: true,
   },
   {
-    title: "Sub-Account Id",
+    title: "Loan-Account Id",
     dataIndex: "id",
     sorter: true,
   },
   {
     title: "Current Balance",
-    dataIndex: "balance",
+    dataIndex: "current_balance",
     sorter: true,
   },
   {
     title: "Date",
-    dataIndex: "date",
+    dataIndex: "updated_at",
+    render:(value) => formatDate(value),
     sorter: true,
   },
 ];
 
-const data: DataType[] = [
-  {
-    key: "1",
-    accountName: "Williams Temitope",
-    id: 123456789,
-    balance: "NGN 1.00",
-    date: "22-04-24",
-  },
-  {
-    key: "2",
-    accountName: "Williams Temitope",
-    id: 123456789,
-    balance: "NGN 2.00",
-    date: "22-04-24",
-  },
-];
 
-const LoanAccountTab = () => {
+
+const LoanAccountTab = ({data}:any) => {
   return (
     <section className="max-w-[1640px] h-full overflow-x-scroll md:overflow-x-clip bg-white py-3 rounded-lg space-y-4">
       <div className="flex gap-8 justify-between items-center">

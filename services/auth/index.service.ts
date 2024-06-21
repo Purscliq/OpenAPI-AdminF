@@ -12,10 +12,6 @@ const authSlice = ApiSlice.enhanceEndpoints({}).injectEndpoints({
         queryFulfilled
           .then((apiResponse) => {
             localStorage.setItem(
-              "refresh",
-              apiResponse.data?.data?.token.refresh_token
-            );
-            localStorage.setItem(
               "token",
               apiResponse.data?.data?.token?.access_token
             );
@@ -102,6 +98,24 @@ const authSlice = ApiSlice.enhanceEndpoints({}).injectEndpoints({
         method: "GET",
       }),
     }),
+    getSingleDetailsKYC: builder.query({
+      query: (id) => ({
+        url: `admin/businesses/${id}/kyc`,
+        method: "GET",
+      }),
+    }),
+    getBusinessSummary: builder.query({
+      query: () => ({
+        url: 'admin/businesses/summary',
+        method: "GET",
+      }),
+    }),
+    getAllBusiness: builder.query({
+      query: () => ({
+        url: 'business/all',
+        method: "GET",
+      }),
+    }),
   }),
 });
 export const {
@@ -118,4 +132,8 @@ export const {
   useGetsingleAccountDetailsQuery,
   useGetComplianceDetailsQuery,
   useGetsingleBusinessDetailsQuery,
+  useGetSingleDetailsKYCQuery,
+  useGetBusinessSummaryQuery,
+  useGetAllBusinessQuery,
+  
 } = authSlice;

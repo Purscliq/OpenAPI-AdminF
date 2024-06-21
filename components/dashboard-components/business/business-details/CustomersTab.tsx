@@ -118,7 +118,7 @@ const data: DataType[] = [
   },
 ];
 
-const CustomersTab = () => {
+const CustomersTab = ({data}:any) => {
   return (
     <section className="max-w-[1640px] h-full overflow-x-scroll md:overflow-x-clip bg-white rounded-lg space-y-4 py-6">
       <Table columns={columns} dataSource={data} />

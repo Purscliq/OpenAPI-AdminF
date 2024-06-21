@@ -1,28 +1,31 @@
-import React from "react";
+"use client"
 import BusinessTable from "./BusinessTable";
 import { BoxIcon, HistoryIcon, PeopleIcon } from "@/assets/svg/AccountsIcons";
 import { HiMiniArrowTrendingUp } from "react-icons/hi2";
+import { useGetBusinessSummaryQuery } from "@/services/auth/index.service";
 
 const Business = () => {
+  const { data, isLoading } = useGetBusinessSummaryQuery({});
+
   const cards = [
     {
       title: "Total Business",
-      value: "40,689",
-      change: "8.5",
+      value: data?.data?.total_count?.count || "0",
+      change: data?.data?.total_count?.pf || "0",
       iconBgColor: "#8280FF",
       icon: <PeopleIcon />,
     },
     {
       title: "Total Active Business",
-      value: "98,000",
-      change: "1.8",
+      value: data?.data?.total_count?.count || "0",
+      change: data?.data?.total_count?.pf || "0",
       iconBgColor: "#FF9066",
       icon: <HistoryIcon />,
     },
     {
       title: "Total Inactive Business",
-      value: "10,293",
-      change: "1.3",
+      value: data?.data?.total_count?.count || "0",
+      change: data?.data?.total_count?.pf || "0",
       iconBgColor: "#FEC53D",
       icon: <BoxIcon />,
     },
@@ -38,7 +41,7 @@ const Business = () => {
       </span>
 
       <div className="w-full py-3 rounded-lg grid grid-cols-1 md:grid-cols-3 gap-6">
-        {cards.map((item, index) => (
+        {cards.map((item:any, index) => (
           <div
             key={index}
             className="rounded-md shadow-sm bg-white p-6 flex gap-8 justify-between min-w-[360px]"

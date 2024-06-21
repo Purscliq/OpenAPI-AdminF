@@ -29,7 +29,7 @@ const AccountDetails = () => {
     {
       key: "2",
       label: "Loan Account",
-      children: <LoanAccountTab />,
+      children: <LoanAccountTab data={account?.data?.loan_accounts || []}/>,
     },
   ];
 

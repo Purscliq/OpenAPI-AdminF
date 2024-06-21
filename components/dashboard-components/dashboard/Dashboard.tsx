@@ -26,7 +26,6 @@ import {
 import { formatDate } from "@/components/helper/dateFormat";
 import { Skeleton } from "antd";
 
-
 const Dashboard = () => {
   const { data } = useGetDashbaordQuery({});
   const { data: notification, isLoading } = useGetNotificationQuery({});
@@ -428,7 +427,7 @@ const Dashboard = () => {
           </p>
 
           {/* items */}
-          <section className="overflow-x-auto">
+          <div className="overflow-x-auto">
             <table className="min-w-full divide-y-2 divide-gray-200 divide-dashed bg-white text-[12px] text-black font-bold">
               <thead className="text-left">
                 <tr>
@@ -440,31 +439,27 @@ const Dashboard = () => {
               </thead>
 
               <tbody className="divide-y divide-gray-200 divide-dashed text-[#2E2E3A] font-normal">
-                {isBusinessloading ? (
-                  <Skeleton active />
-                ) : (
-                  business?.data.map((business: any, index: any) => (
-                    <tr key={index}>
-                      <td className="whitespace-nowrap px-4 py-2 font-bold text-base text-black">
-                        {business.name}
-                      </td>
-                      <td className="whitespace-nowrap px-4 py-2 text-[#2E2E3A]">
-                        {business.support_email}
-                      </td>
-                      <td className="whitespace-nowrap px-4 py-3">
-                        {business.support_phone}
-                      </td>
-                      <td className="whitespace-nowrap px-4 py-3">
-                        <p className="text-[#1CA78B] text-[12px] bg-[#1CA78B0D] px-[10px] py-[4px] rounded-[4px] w-max">
-                          {business.status}
-                        </p>
-                      </td>
-                    </tr>
-                  ))
-                )}
+                {business?.data.map((business: any, index: any) => (
+                  <tr key={index}>
+                    <td className="whitespace-nowrap px-4 py-2 font-bold text-base text-black">
+                      {business.name}
+                    </td>
+                    <td className="whitespace-nowrap px-4 py-2 text-[#2E2E3A]">
+                      {business.support_email}
+                    </td>
+                    <td className="whitespace-nowrap px-4 py-3">
+                      {business.support_phone}
+                    </td>
+                    <td className="whitespace-nowrap px-4 py-3">
+                      <p className="text-[#1CA78B] text-[12px] bg-[#1CA78B0D] px-[10px] py-[4px] rounded-[4px] w-max">
+                        {business.status}
+                      </p>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
-          </section>
+          </div>
         </div>
 
         {/* Notification */}

@@ -9,6 +9,7 @@ import { Dropdown } from "antd";
 import type { TableColumnsType, MenuProps } from "antd";
 import FilterIcon from "@/assets/svg/FilterIcon";
 import Link from "next/link";
+import { useGetAllBusinessQuery } from "@/services/auth/index.service";
 
 interface DataType {
   key: React.Key;
@@ -28,12 +29,12 @@ const items: MenuProps["items"] = [
 const columns: TableColumnsType<DataType> = [
   {
     title: "Business Name",
-    dataIndex: "businessName",
+    dataIndex: "name",
     sorter: true,
   },
   {
     title: "Business Email",
-    dataIndex: "businessEmail",
+    dataIndex: "email",
     sorter: true,
   },
   {
@@ -43,7 +44,7 @@ const columns: TableColumnsType<DataType> = [
   },
   {
     title: "Business Type",
-    dataIndex: "businessType",
+    dataIndex: "business_type",
     sorter: true,
   },
 
@@ -54,55 +55,26 @@ const columns: TableColumnsType<DataType> = [
       </span>
     ),
     dataIndex: "id",
-    render: (_: any, _record: DataType) => (
-      <Dropdown menu={{ items }} placement="bottomRight">
-        <button type="button" className="text-lg font-semibold">
-          ...
-        </button>
-      </Dropdown>
+    render: (id: any, _record: DataType) => (
+      <Dropdown menu={{ items }} placement="bottomRight" trigger={["click"]}>
+      <button
+        type="button"
+        className="text-lg font-semibold"
+        onClick={() => sessionStorage.setItem("id",id)}
+      >
+        ...
+      </button>
+    </Dropdown>
     ),
   },
 ];
 
-const data: DataType[] = [
-  {
-    key: "1",
-    businessName: "Chike and Sons",
-    businessEmail: "temitopedml@gmail.com",
-    customers: 12,
-    businessType: "Personal",
-  },
-  {
-    key: "2",
-    businessName: "Chike and Sons",
-    businessEmail: "temitopedml@gmail.com",
-    customers: 12,
-    businessType: "Business",
-  },
-  {
-    key: "3",
-    businessName: "Chike and Sons",
-    businessEmail: "temitopedml@gmail.com",
-    customers: 12,
-    businessType: "Personal",
-  },
-  {
-    key: "4",
-    businessName: "Chike and Sons",
-    businessEmail: "temitopedml@gmail.com",
-    customers: 12,
-    businessType: "Business",
-  },
-  {
-    key: "5",
-    businessName: "Chike and Sons",
-    businessEmail: "temitopedml@gmail.com",
-    customers: 12,
-    businessType: "Personal",
-  },
-];
+
+
+
 
 const BusinessTable = () => {
+  const { data: business, isLoading } = useGetAllBusinessQuery({});
   return (
     <section className="max-w-[1640px] h-full overflow-x-scroll md:overflow-x-clip bg-white p-6 rounded-lg space-y-4">
       <div className="flex gap-8 justify-between items-center">
@@ -113,7 +85,7 @@ const BusinessTable = () => {
         </Button>
       </div>
 
-      <Table columns={columns} dataSource={data} />
+      <Table columns={columns} dataSource={business?.data} loading={isLoading}/>
     </section>
   );
 };

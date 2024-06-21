@@ -7,12 +7,13 @@ import {
 } from "@/lib/AntdComponents";
 import type { TableColumnsType } from "antd";
 import FilterIcon from "@/assets/svg/FilterIcon";
+import { formatDate } from "@/components/helper/dateFormat";
 
 interface DataType {
   key: React.Key;
   id: number;
   account_name: string;
-  currentBalance: string;
+  current_balance: string;
   date: string;
 }
 
@@ -29,12 +30,13 @@ const columns: TableColumnsType<DataType> = [
   },
   {
     title: "Current Balance",
-    dataIndex: "currentBalance",
+    dataIndex: "current_balance",
     sorter: true,
   },
   {
     title: "Date",
-    dataIndex: "date",
+    dataIndex: "updated_at",
+    render:(value) => formatDate(value),
     sorter: true,
   },
 ];

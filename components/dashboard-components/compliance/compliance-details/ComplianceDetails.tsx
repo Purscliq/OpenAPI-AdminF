@@ -8,6 +8,7 @@ import BusinessDetailsTab from "./BusinessDetailsTab";
 import { GoArrowLeft } from "react-icons/go";
 import {
   useGetComplianceDetailsQuery,
+  useGetSingleDetailsKYCQuery,
   useGetsingleBusinessDetailsQuery,
 } from "@/services/auth/index.service";
 import KYCTabs from "./KYCTabs";
@@ -18,6 +19,7 @@ const ComplianceDetails = () => {
   const { data: compliance, isLoading } = useGetComplianceDetailsQuery(id);
   const { data: businessDetails, isLoading: isgettingBusiness } =
     useGetsingleBusinessDetailsQuery(id);
+  const { data: KYC } = useGetSingleDetailsKYCQuery(id);
 
   const items: TabsProps["items"] = [
     {
@@ -40,7 +42,7 @@ const ComplianceDetails = () => {
     {
       key: "3",
       label: "KYC",
-      children: <KYCTabs data={businessDetails?.data} />,
+      children: <KYCTabs data={KYC?.data} />,
     },
   ];
 

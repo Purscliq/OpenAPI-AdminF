@@ -1,11 +1,11 @@
 import React from "react";
 
-const BusinessDetailsTab = () => {
+const BusinessDetailsTab = ({ data }: any) => {
   const details = [
-    { label: "Business Name", value: "James and sons" },
-    { label: "Business Email", value: "James@gmail.com  " },
-    { label: "Customers", value: "12  " },
-    { label: "Business Type", value: "Business" },
+    { label: "Business Name", value: data?.name },
+    { label: "Business Email", value: data?.email },
+    { label: "Customers", value: data?.customers },
+    { label: "Business EXT", value: data?.ext },
   ];
 
   return (

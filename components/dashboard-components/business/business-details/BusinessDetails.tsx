@@ -1,28 +1,30 @@
 "use client";
-
 import React from "react";
 import { useRouter } from "next/navigation";
-
 import { CustomTabs as Tabs } from "@/lib/AntdComponents";
 import { TabsProps } from "antd";
 import { GoArrowLeft } from "react-icons/go";
 import CustomersTab from "./CustomersTab";
 import DevelopersTab from "./DevelopersTab";
 import BusinessDetailsTab from "./BusinessDetailsTab";
+import { useGetsingleBusinessDetailsQuery } from "@/services/auth/index.service";
 
 const BusinessDetails = () => {
   const router = useRouter();
-
+  const id = sessionStorage.getItem("id");
+  const { data: businessDetails, isLoading: isgettingBusiness } =
+    useGetsingleBusinessDetailsQuery(id);
+  const { data: customer, isLoading } = useGetsingleBusinessDetailsQuery(id);
   const items: TabsProps["items"] = [
     {
       key: "1",
       label: "Business Details",
-      children: <BusinessDetailsTab />,
+      children: <BusinessDetailsTab data={businessDetails?.data} />,
     },
     {
       key: "2",
       label: "Customers",
-      children: <CustomersTab />,
+      children: <CustomersTab data={businessDetails?.data} />,
     },
     {
       key: "3",
