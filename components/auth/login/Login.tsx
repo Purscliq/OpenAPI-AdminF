@@ -24,7 +24,7 @@ const Login = () => {
 
   const handleSubmit = async () => {
     try {
-      await login({ ...formData })
+      await login({ ...formData }).unwrap();
       message.success("Login successful");
       await fetchDashboardData({});
       replace("dashboard");

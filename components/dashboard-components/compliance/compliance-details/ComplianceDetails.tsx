@@ -1,33 +1,46 @@
 "use client";
-
 import React from "react";
 import { useRouter } from "next/navigation";
-
 import { CustomTabs as Tabs } from "@/lib/AntdComponents";
 import { TabsProps } from "antd";
-import KycTab from "./KYCTab";
 import PersonalDetailsTab from "./PersonalDetailsTab";
 import BusinessDetailsTab from "./BusinessDetailsTab";
 import { GoArrowLeft } from "react-icons/go";
+import {
+  useGetComplianceDetailsQuery,
+  useGetsingleBusinessDetailsQuery,
+} from "@/services/auth/index.service";
+import KYCTabs from "./KYCTabs";
 
 const ComplianceDetails = () => {
   const router = useRouter();
+  const id = sessionStorage.getItem("session_id");
+  const { data: compliance, isLoading } = useGetComplianceDetailsQuery(id);
+  const { data: businessDetails, isLoading: isgettingBusiness } =
+    useGetsingleBusinessDetailsQuery(id);
 
   const items: TabsProps["items"] = [
     {
       key: "1",
       label: "Personal Details",
-      children: <PersonalDetailsTab />,
+      children: (
+        <PersonalDetailsTab data={compliance?.data} loding={isLoading} />
+      ),
     },
     {
       key: "2",
       label: "Business Details",
-      children: <BusinessDetailsTab />,
+      children: (
+        <BusinessDetailsTab
+          data={businessDetails?.data}
+          loading={isgettingBusiness}
+        />
+      ),
     },
     {
       key: "3",
       label: "KYC",
-      children: <KycTab />,
+      children: <KYCTabs data={businessDetails?.data} />,
     },
   ];
 

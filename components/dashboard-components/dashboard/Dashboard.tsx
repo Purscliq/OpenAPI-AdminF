@@ -428,7 +428,7 @@ const Dashboard = () => {
           </p>
 
           {/* items */}
-          <div className="overflow-x-auto">
+          <section className="overflow-x-auto">
             <table className="min-w-full divide-y-2 divide-gray-200 divide-dashed bg-white text-[12px] text-black font-bold">
               <thead className="text-left">
                 <tr>
@@ -464,7 +464,7 @@ const Dashboard = () => {
                 )}
               </tbody>
             </table>
-          </div>
+          </section>
         </div>
 
         {/* Notification */}

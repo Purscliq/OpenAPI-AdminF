@@ -1,23 +1,24 @@
+import { formatDate } from "@/components/helper/dateFormat";
+import { Skeleton } from "antd";
 import React from "react";
 
-const PersonalDetailsTab = () => {
+const PersonalDetailsTab = ({ data, loding }: any) => {
   const details = [
-    { label: "First Name", value: "James" },
-    { label: "Last Name", value: "James" },
-    { label: "Email", value: "temitopedml@gmail.com" },
-    { label: "Gender", value: "Female" },
-    { label: "Date of birth", value: "31-01-1992" },
-    { label: "Nationality", value: "Nigerian" },
-    {
-      label: "Residential Address",
-      value: "6, franklin street ebute metta west lagos",
-    },
-    { label: "Country", value: "Nigeria" },
+    { label: "First Name", value: data?.legal_first_name },
+    { label: "Last Name", value: data?.legal_last_name },
+    { label: "Gender", value: data?.gender },
+    { label: "Date of Birth", value: formatDate(data?.dob) },
+    { label: "Nationality", value: data?.nationality },
+    { label: "Residential Address", value: data?.address },
   ];
+
   const additionalDetails = [
-    { label: "BVN", value: "12345678910" },
-    { label: "Phone", value: "+44 1245 572 135" },
-    { label: "Date Joined", value: "April 2023" },
+    { label: "BVN", value: data?.bvn },
+    { label: "Phone", value: data?.phone_number },
+    {
+      label: "Date Joined",
+      value: formatDate(data?.created_at),
+    },
   ];
 
   return (
@@ -27,12 +28,16 @@ const PersonalDetailsTab = () => {
           <h3 className="text-[18px] md:text-[24px] font-bold text-[#25324B]">
             Details
           </h3>
-          {details.map((item, index) => (
-            <span key={index} className="flex flex-wrap gap-2">
-              <p className="text-base font-bold">{item.label}:</p>
-              <p className="text-base">{item.value}</p>
-            </span>
-          ))}
+          {loding ? (
+            <Skeleton active paragraph={{ rows: 6 }} />
+          ) : (
+            details.map((item, index) => (
+              <span key={index} className="flex flex-wrap gap-2">
+                <p className="text-base font-bold">{item.label}:</p>
+                <p className="text-base">{item.value || "N/A"}</p>
+              </span>
+            ))
+          )}
         </div>
 
         {/* additional details */}
@@ -40,12 +45,18 @@ const PersonalDetailsTab = () => {
           <h3 className="text-[18px] md:text-[24px] font-bold text-[#25324B]">
             Additional Details
           </h3>
-          {additionalDetails.map((item, index) => (
-            <span key={index} className="flex flex-col gap-2">
-              <p className="text-base font-bold">{item.label}:</p>
-              <p className="text-base text-[#7C8493]">{item.value}</p>
-            </span>
-          ))}
+          {loding ? (
+            <Skeleton active paragraph={{ rows: 3 }} />
+          ) : (
+            additionalDetails.map((item, index) => (
+              <span key={index} className="flex flex-col gap-2">
+                <p className="text-base font-bold">{item.label}:</p>
+                <p className="text-base text-[#7C8493]">
+                  {item.value || "N/A"}
+                </p>
+              </span>
+            ))
+          )}
         </div>
       </div>
     </section>

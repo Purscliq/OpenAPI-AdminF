@@ -72,6 +72,12 @@ const authSlice = ApiSlice.enhanceEndpoints({}).injectEndpoints({
         method: "GET",
       }),
     }),
+    getComplianceDetails: builder.query({
+      query: (id) => ({
+        url: `admin/compliance/businesses/${id}/director`,
+        method: "GET",
+      }),
+    }),
     getAccountSumarry: builder.query({
       query: () => ({
         url: "admin/accounts/summary",
@@ -90,6 +96,12 @@ const authSlice = ApiSlice.enhanceEndpoints({}).injectEndpoints({
         method: "GET",
       }),
     }),
+    getsingleBusinessDetails: builder.query({
+      query: (id) => ({
+        url: `admin/compliance/businesses/${id}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 export const {
@@ -104,4 +116,6 @@ export const {
   useGetAccountSumarryQuery,
   useGetAlAccountQuery,
   useGetsingleAccountDetailsQuery,
+  useGetComplianceDetailsQuery,
+  useGetsingleBusinessDetailsQuery,
 } = authSlice;

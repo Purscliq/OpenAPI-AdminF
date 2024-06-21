@@ -13,7 +13,6 @@ import Link from "next/link";
 import { useGetComplianceQuery } from "@/services/auth/index.service";
 
 interface DataType {
-  key: React.Key;
   business_id: number;
   first_name: string;
   last_name: string;
@@ -55,10 +54,14 @@ const columns: TableColumnsType<DataType> = [
         <p>Action</p>
       </span>
     ),
-    dataIndex: "id",
-    render: (_: any, _record: DataType) => (
-      <Dropdown menu={{ items }} placement="bottomRight">
-        <button type="button" className="text-lg font-semibold">
+    dataIndex: "business_id",
+    render: (id: any, _record: DataType) => (
+      <Dropdown menu={{ items }} placement="bottomRight" trigger={["click"]}>
+        <button
+          type="button"
+          className="text-lg font-semibold"
+          onClick={() => sessionStorage.setItem("session_id", id)}
+        >
           ...
         </button>
       </Dropdown>

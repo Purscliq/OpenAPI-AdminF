@@ -11,7 +11,7 @@ import FilterIcon from "@/assets/svg/FilterIcon";
 interface DataType {
   key: React.Key;
   id: number;
-  accountName: string;
+  account_name: string;
   currentBalance: string;
   date: string;
 }
@@ -19,7 +19,7 @@ interface DataType {
 const columns: TableColumnsType<DataType> = [
   {
     title: "Account Name",
-    dataIndex: "accountName",
+    dataIndex: "account_name",
     sorter: true,
   },
   {
@@ -50,7 +50,7 @@ const SubAccountTab = ({ data }: any) => {
         </Button>
       </div>
 
-      <Table columns={columns} dataSource={data || []} />
+      <Table columns={columns} dataSource={data|| []} />
     </section>
   );
 };
