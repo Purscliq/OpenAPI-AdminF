@@ -9,25 +9,34 @@ import KycTab from "./KYCTab";
 import BasicInfoTab from "./BasicInfoTab";
 import TransactionsTab from "./TransactionsTab";
 import { GoArrowLeft } from "react-icons/go";
+import {
+  useGetCostomerDetailsQuery,
+  useGetCostomerKYCQuery,
+} from "@/services/auth/index.service";
 
 const CustomerDetails = () => {
   const router = useRouter();
-
+  const customer_id = sessionStorage.getItem("customer_id");
+  const { data: customerDetails, isLoading:isdetails } =
+    useGetCostomerDetailsQuery(customer_id);
+  const { data: cutomerKyc, isLoading } = useGetCostomerKYCQuery(customer_id);
   const items: TabsProps["items"] = [
     {
       key: "1",
       label: "Basic Info",
-      children: <BasicInfoTab />,
+      children: (
+        <BasicInfoTab data={customerDetails?.data} loading={isdetails} />
+      ),
     },
     {
       key: "2",
       label: "KYC",
-      children: <KycTab />,
+      children: <KycTab data={cutomerKyc?.data} />,
     },
     {
       key: "3",
       label: "Transactions",
-      children: <TransactionsTab />,
+      children: <TransactionsTab  data={customerDetails?.data} />,
     },
   ];
 

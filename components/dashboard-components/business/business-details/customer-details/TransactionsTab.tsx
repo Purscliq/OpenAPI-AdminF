@@ -63,34 +63,9 @@ const columns: TableColumnsType<DataType> = [
   },
 ];
 
-const data: DataType[] = [
-  {
-    key: "1",
-    date: "12/02/24",
-    id: "10011",
-    name: "Temitope Williams",
-    currency: "NGN",
-    amount: "NGN 150,000.00",
-  },
-  {
-    key: "2",
-    date: "12/02/24",
-    id: "10011",
-    name: "Temitope Williams",
-    currency: "NGN",
-    amount: "NGN 150,000.00",
-  },
-  {
-    key: "1",
-    date: "12/02/24",
-    id: "10011",
-    name: "Temitope Williams",
-    currency: "NGN",
-    amount: "NGN 150,000.00",
-  },
-];
 
-const TransactionsTab = () => {
+
+const TransactionsTab = ({data}:any) => {
   return (
     <section className="max-w-[1640px] h-full overflow-x-scroll md:overflow-x-clip bg-white py-3 rounded-lg space-y-4">
       <p className="font-bold text-base">Transaction History</p>
@@ -114,7 +89,7 @@ const TransactionsTab = () => {
         </Button>
       </div>
 
-      <Table columns={columns} dataSource={data} />
+      <Table columns={columns} dataSource={data?.transactions} />
     </section>
   );
 };

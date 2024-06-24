@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { CustomTabs as Tabs } from "@/lib/AntdComponents";
 import { TabsProps } from "antd";
@@ -7,14 +7,27 @@ import { GoArrowLeft } from "react-icons/go";
 import CustomersTab from "./CustomersTab";
 import DevelopersTab from "./DevelopersTab";
 import BusinessDetailsTab from "./BusinessDetailsTab";
-import { useGetsingleBusinessDetailsQuery } from "@/services/auth/index.service";
+import {
+  useGetCustomerQuery,
+  useGetsingleBusinessDetailsQuery,
+} from "@/services/auth/index.service";
 
 const BusinessDetails = () => {
   const router = useRouter();
-  const id = sessionStorage.getItem("id");
+  const [id, setId] = useState("");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const sessionId = sessionStorage.getItem("id");
+      setId(sessionId);
+    }
+  }, []);
+
   const { data: businessDetails, isLoading: isgettingBusiness } =
     useGetsingleBusinessDetailsQuery(id);
-  const { data: customer, isLoading } = useGetsingleBusinessDetailsQuery(id);
+  const { data: customers, isLoading: isgettingCustomer } =
+    useGetsingleBusinessDetailsQuery(id);
+
   const items: TabsProps["items"] = [
     {
       key: "1",
@@ -24,7 +37,9 @@ const BusinessDetails = () => {
     {
       key: "2",
       label: "Customers",
-      children: <CustomersTab data={businessDetails?.data} />,
+      children: (
+        <CustomersTab data={customers?.data} loading={isgettingCustomer} />
+      ),
     },
     {
       key: "3",

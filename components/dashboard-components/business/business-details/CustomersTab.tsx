@@ -83,10 +83,16 @@ const columns: TableColumnsType<DataType> = [
         <p>Action</p>
       </span>
     ),
-    dataIndex: "id",
-    render: (_: any, _record: DataType) => (
+    dataIndex: "_id",
+    render: (_id: any, _record: DataType) => (
       <Dropdown menu={{ items }} placement="bottomRight">
-        <button type="button" className="text-lg font-semibold">
+        <button
+          type="button"
+          className="text-lg font-semibold"
+          onClick={() => {
+            sessionStorage.setItem("customer_id", _id);
+          }}
+        >
           ...
         </button>
       </Dropdown>
@@ -94,34 +100,23 @@ const columns: TableColumnsType<DataType> = [
   },
 ];
 
-const data: DataType[] = [
-  {
-    key: "1",
-    name: "Cruise Tech",
-    date: "Feb 9th, 2024",
-    customerType: "Individual",
-    status: "Active",
-  },
-  {
-    key: "2",
-    name: "Cruise Tech",
-    date: "Feb 9th, 2024",
-    customerType: "Individual",
-    status: "Pending",
-  },
-  {
-    key: "1",
-    name: "Cruise Tech",
-    date: "Feb 9th, 2024",
-    customerType: "Individual",
-    status: "Inactive",
-  },
-];
+const transformData = (apiData: any[]) => {
+  return apiData.map((item, index) => ({
+    key: index,
+    _id: item._id,
+    name: `${item.firstName} ${item.lastName}`,
+    date: new Date(item.createdAt).toLocaleDateString(),
+    customerType: item.userType,
+    status: item.status.charAt(0).toUpperCase() + item.status.slice(1),
+  }));
+};
 
-const CustomersTab = ({data}:any) => {
+const CustomersTab = ({ data: apiResponse, loading }: any) => {
+  const data = transformData(apiResponse?.data);
+
   return (
     <section className="max-w-[1640px] h-full overflow-x-scroll md:overflow-x-clip bg-white rounded-lg space-y-4 py-6">
-      <Table columns={columns} dataSource={data} />
+      <Table columns={columns} dataSource={data} loading={loading} />
     </section>
   );
 };

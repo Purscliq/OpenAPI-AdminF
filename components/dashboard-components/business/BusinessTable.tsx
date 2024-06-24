@@ -55,23 +55,21 @@ const columns: TableColumnsType<DataType> = [
       </span>
     ),
     dataIndex: "id",
-    render: (id: any, _record: DataType) => (
+    render: (id: any, record: DataType) => (
       <Dropdown menu={{ items }} placement="bottomRight" trigger={["click"]}>
-      <button
-        type="button"
-        className="text-lg font-semibold"
-        onClick={() => sessionStorage.setItem("id",id)}
-      >
-        ...
-      </button>
-    </Dropdown>
+        <button
+          type="button"
+          className="text-lg font-semibold"
+          onClick={() => {
+            sessionStorage.setItem("id", id);
+          }}
+        >
+          ...
+        </button>
+      </Dropdown>
     ),
   },
 ];
-
-
-
-
 
 const BusinessTable = () => {
   const { data: business, isLoading } = useGetAllBusinessQuery({});
@@ -85,7 +83,11 @@ const BusinessTable = () => {
         </Button>
       </div>
 
-      <Table columns={columns} dataSource={business?.data} loading={isLoading}/>
+      <Table
+        columns={columns}
+        dataSource={business?.data}
+        loading={isLoading}
+      />
     </section>
   );
 };

@@ -106,13 +106,43 @@ const authSlice = ApiSlice.enhanceEndpoints({}).injectEndpoints({
     }),
     getBusinessSummary: builder.query({
       query: () => ({
-        url: 'admin/businesses/summary',
+        url: "admin/businesses/summary",
         method: "GET",
       }),
     }),
     getAllBusiness: builder.query({
       query: () => ({
-        url: 'business/all',
+        url: "business/all",
+        method: "GET",
+      }),
+    }),
+    getCustomer: builder.query({
+      query: (id) => ({
+        url: `admin/businesses/${id}/customers`,
+        method: "GET",
+      }),
+    }),
+    getCostomerDetails: builder.query({
+      query: (id) => ({
+        url: `business/customers/${id}`,
+        method: "GET",
+      }),
+    }),
+    getCostomerKYC: builder.query({
+      query: (id) => ({
+        url: `admin/businesses/customers/${id}/kyc`,
+        method: "GET",
+      }),
+    }),
+    getCostomerTransaction: builder.query({
+      query: (id) => ({
+        url: `admin/businesses/customers/${id}/transactions`,
+        method: "GET",
+      }),
+    }),
+    getBusinessApiKeys: builder.query({
+      query: (id) => ({
+        url: `admin/businesses/${id}/developers/apikeys`,
         method: "GET",
       }),
     }),
@@ -135,5 +165,9 @@ export const {
   useGetSingleDetailsKYCQuery,
   useGetBusinessSummaryQuery,
   useGetAllBusinessQuery,
-  
+  useGetCustomerQuery,
+  useGetCostomerDetailsQuery,
+  useGetCostomerKYCQuery,
+  useGetCostomerTransactionQuery,
+  useGetBusinessApiKeysQuery,
 } = authSlice;
