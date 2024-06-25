@@ -5,14 +5,16 @@ import {
   CustomButton as Button,
   CustomTable as Table,
 } from "@/lib/AntdComponents";
-import type { TableColumnsType } from "antd";
+import { message, type TableColumnsType } from "antd";
 import DeleteIcon from "@/assets/svg/DeleteIcon";
+import { useDeleteApikeyMutation } from "@/services/auth/index.service";
 
 interface DataType {
   key: React.Key;
   name: string;
-  sourceIP: string;
+  service_id: string;
   expiry: string;
+  id: number;
 }
 
 const columns: TableColumnsType<DataType> = [
@@ -22,8 +24,8 @@ const columns: TableColumnsType<DataType> = [
     sorter: true,
   },
   {
-    title: "Source IP",
-    dataIndex: "sourceIP",
+    title: "Service ID ",
+    dataIndex: "service_id",
     sorter: true,
   },
   {
@@ -31,44 +33,44 @@ const columns: TableColumnsType<DataType> = [
     dataIndex: "expiry",
     sorter: true,
   },
-
   {
-    title: (
-      <></>
-      //   <span className="flex items-center">
-      //     <p>Action</p>
-      //   </span>
-    ),
+    title: "",
     dataIndex: "id",
-    render: (_: any, _record: DataType) => (
-      <button type="button" className="text-lg font-semibold" title="Delete">
-        <DeleteIcon />
-      </button>
+    render: (id: number, _record: DataType) => (
+      <DeleteButton id={id} />
     ),
   },
 ];
 
-const data: DataType[] = [
-  {
-    key: "1",
-    name: "SUDO_API_KEY",
-    sourceIP: "N/A",
-    expiry: "July 25, 2024. 10:05 PM",
-  },
-  {
-    key: "2",
-    name: "SUDO_API_KEY",
-    sourceIP: "N/A",
-    expiry: "July 25, 2024. 10:05 PM",
-  },
-];
+const DeleteButton = ({ id }: { id: number }) => {
+  const [deleteApikey, { isLoading }] = useDeleteApikeyMutation({});
 
-const APIKeys = () => {
+  const handleDelete = async () => {
+    try {
+      await deleteApikey(id).unwrap();
+    } catch (error) {
+      console.error("Failed to delete API key:", error);
+    }
+  };
+
+  return (
+    <button
+      type="button"
+      className="text-lg font-semibold"
+      title="Delete"
+      onClick={handleDelete}
+      disabled={isLoading}
+    >
+      <DeleteIcon />
+    </button>
+  );
+};
+
+const APIKeys = ({ data, loading }: { data: DataType[], loading: boolean }) => {
   return (
     <section className="max-w-[1640px] h-full overflow-x-scroll md:overflow-x-clip py-4 px-2 space-y-4">
-      <p className="font-bold text-base">2 API Key(s)</p>
-
-      <Table columns={columns} dataSource={data} />
+      <p className="font-bold text-base">{data?.length} API Key(s)</p>
+      <Table columns={columns} dataSource={data} loading={loading} />
     </section>
   );
 };

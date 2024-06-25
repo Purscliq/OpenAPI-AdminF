@@ -7,37 +7,37 @@ import { TabsProps } from "antd";
 import Whitelist from "./developer-details/Whitelist";
 import Webhooks from "./developer-details/Webhooks";
 import APIKeys from "./developer-details/APIKeys";
+import { useGetBusinessDeveloperKeyQuery } from "@/services/auth/index.service";
 
 const DevelopersTab = () => {
+  const id = sessionStorage.getItem("id");
+  const { data: developer, isLoading } = useGetBusinessDeveloperKeyQuery(id);
+
   const items: TabsProps["items"] = [
     {
       key: "1",
       label: "API Keys",
-      children: <APIKeys />,
+      children: <APIKeys data={developer?.data?.api_keys} loading ={isLoading}/>,
     },
     {
       key: "2",
       label: "Webhooks",
-      children: <Webhooks />,
+      children: <Webhooks data={developer?.data?.webhooks} loading ={isLoading}/>,
     },
+    
     {
       key: "3",
       label: "Whitelist",
-      children: <Whitelist />,
+      children: <Whitelist data={developer?.data?.whitelist} />,
     },
   ];
 
   return (
     <section className="max-w-[1640px] flex flex-col gap-4 py-5">
-      {/* <h2 className="text-base md:text-[20px] font-semibold">
-        Developers Details
-      </h2> */}
-
       <Tabs
         defaultActiveKey="1"
         items={items}
         tabBarGutter={5}
-        // type="card"
         tabPosition="left"
         centered
       />

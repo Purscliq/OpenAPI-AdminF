@@ -8,25 +8,18 @@ import CustomersTab from "./CustomersTab";
 import DevelopersTab from "./DevelopersTab";
 import BusinessDetailsTab from "./BusinessDetailsTab";
 import {
+  useGetBusinessDeveloperKeyQuery,
   useGetCustomerQuery,
   useGetsingleBusinessDetailsQuery,
 } from "@/services/auth/index.service";
 
 const BusinessDetails = () => {
   const router = useRouter();
-  const [id, setId] = useState("");
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const sessionId = sessionStorage.getItem("id");
-      setId(sessionId);
-    }
-  }, []);
-
+  const id = sessionStorage.getItem("id");
   const { data: businessDetails, isLoading: isgettingBusiness } =
     useGetsingleBusinessDetailsQuery(id);
   const { data: customers, isLoading: isgettingCustomer } =
-    useGetsingleBusinessDetailsQuery(id);
+    useGetCustomerQuery(id);
 
   const items: TabsProps["items"] = [
     {

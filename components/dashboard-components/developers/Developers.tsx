@@ -1,45 +1,64 @@
-import React from "react";
+"use client";
 import { TabsProps } from "antd";
 import { CustomTabs as Tabs } from "@/lib/AntdComponents";
 import { HiMiniArrowTrendingUp } from "react-icons/hi2";
 import APIKeys from "./developers-tab/APIKeys";
 import Webhooks from "./developers-tab/Webhooks";
 import Whitelist from "./developers-tab/Whitelist";
+import {
+  useGetBusinessDeveloperKeyQuery,
+  useGetDeveloperSummaryQuery,
+} from "@/services/auth/index.service";
 
 const Developers = () => {
+  const id = sessionStorage.getItem("id");
+  const { data } = useGetDeveloperSummaryQuery({});
+  const { data: developer, isLoading } = useGetBusinessDeveloperKeyQuery(id);
+
+  const summaryData = data?.data || {
+    api_key: { total: 0, pf: 0 },
+    whitelist: { total: 0, pf: 0 },
+    webhooks: { total: 0, pf: 0 },
+  };
+
   const items: TabsProps["items"] = [
     {
       key: "1",
       label: "API Keys",
-      children: <APIKeys />,
+      children: (
+        <APIKeys data={developer?.data?.api_keys} loading={isLoading} />
+      ),
     },
     {
       key: "2",
       label: "Webhooks",
-      children: <Webhooks />,
+      children: (
+        <Webhooks data={developer?.data?.webhooks} loading={isLoading} />
+      ),
     },
+
     {
       key: "3",
       label: "Whitelist",
-      children: <Whitelist />,
+      children: <Whitelist data={developer?.data?.whitelist} />,
     },
   ];
 
   const cards = [
     {
       title: "Total API Keys",
-      value: "40,689",
-      change: "8.5",
+      value: summaryData.api_key.total,
+      change: summaryData.api_key.pf,
     },
     {
-      title: "Total Webhook",
-      value: "98,000",
-      change: "1.8",
+      title: "Total Webhooks",
+      value: summaryData.webhooks.total,
+      change: summaryData.webhooks.pf,
     },
     {
       title: "Total Whitelist",
-      value: "10,293",
-      change: "1.3",
+      value: summaryData.whitelist.total,
+      change: summaryData.whitelist.pf,
     },
   ];
 

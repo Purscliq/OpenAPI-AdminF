@@ -7,6 +7,7 @@ import {
 } from "@/lib/AntdComponents";
 import type { TableColumnsType } from "antd";
 import DeleteIcon from "@/assets/svg/DeleteIcon";
+import { useDeleteIPMutation } from "@/services/auth/index.service";
 
 interface DataType {
   key: React.Key;
@@ -16,7 +17,7 @@ interface DataType {
 const columns: TableColumnsType<DataType> = [
   {
     title: "IP",
-    dataIndex: "IP",
+    dataIndex: "ipv4",
     sorter: true,
   },
 
@@ -28,7 +29,7 @@ const columns: TableColumnsType<DataType> = [
       //   </span>
     ),
     dataIndex: "id",
-    render: (_: any, _record: DataType) => (
+    render: (id: any, _record: DataType) => (
       <span className="flex gap-4 items-center justify-end">
         <button
           type="button"
@@ -51,25 +52,39 @@ const columns: TableColumnsType<DataType> = [
           </label>
         </button>
         <p className="font-semibold">Active</p>
-        <button type="button" title="Delete">
-          <DeleteIcon />
-        </button>
+        <DeleteButton id={id} />
       </span>
     ),
   },
 ];
 
-const data: DataType[] = [
-  {
-    key: "1",
-    IP: "192.168.1.1",
-  },
-];
+const DeleteButton = ({ id }: { id: number }) => {
+  const [deleteWebhook, { isLoading }] = useDeleteIPMutation({});
 
-const Whitelist = () => {
+  const handleDelete = async () => {
+    try {
+      await deleteWebhook(id).unwrap();
+    } catch (error) {
+      console.error("Failed to delete API key:", error);
+    }
+  };
+
+  return (
+    <button
+      type="button"
+      className="text-lg font-semibold"
+      title="Delete"
+      onClick={handleDelete}
+      disabled={isLoading}
+    >
+      <DeleteIcon />
+    </button>
+  );
+};
+const Whitelist = ({ data }: any) => {
   return (
     <section className="max-w-[1640px] h-full overflow-x-scroll md:overflow-x-clip py-4 px-2 space-y-4">
-      <p className="font-bold text-base">1 Whitelist(s)</p>
+      <p className="font-bold text-base">{data?.length} Whitelist(s)</p>
 
       <Table columns={columns} dataSource={data} />
     </section>

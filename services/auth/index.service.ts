@@ -1,6 +1,8 @@
 import { ApiSlice } from "..";
 
-const authSlice = ApiSlice.enhanceEndpoints({}).injectEndpoints({
+const authSlice = ApiSlice.enhanceEndpoints({
+  addTagTypes: ["developer"],
+}).injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation({
       query: (body) => ({
@@ -140,9 +142,37 @@ const authSlice = ApiSlice.enhanceEndpoints({}).injectEndpoints({
         method: "GET",
       }),
     }),
-    getBusinessApiKeys: builder.query({
+    getBusinessDeveloperKey: builder.query({
       query: (id) => ({
-        url: `admin/businesses/${id}/developers/apikeys`,
+        url: `admin/businesses/${id}/developers/resources`,
+        method: "GET",
+      }),
+      providesTags: ["developer"],
+    }),
+    deleteApikey: builder.mutation({
+      query: (id) => ({
+        url: `auth/api_keys/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["developer"],
+    }),
+    deleteWebHookey: builder.mutation({
+      query: (id) => ({
+        url: `users/webhooks/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["developer"],
+    }),
+    deleteIP: builder.mutation({
+      query: (id) => ({
+        url: `users/ip-address/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["developer"],
+    }),
+    getDeveloperSummary: builder.query({
+      query: () => ({
+        url: "admin/businesses/developers/summary",
         method: "GET",
       }),
     }),
@@ -169,5 +199,9 @@ export const {
   useGetCostomerDetailsQuery,
   useGetCostomerKYCQuery,
   useGetCostomerTransactionQuery,
-  useGetBusinessApiKeysQuery,
+  useGetBusinessDeveloperKeyQuery,
+  useDeleteApikeyMutation,
+  useDeleteWebHookeyMutation,
+  useDeleteIPMutation,
+  useGetDeveloperSummaryQuery
 } = authSlice;
