@@ -1,76 +1,100 @@
-"use client";
-
 import React from "react";
-import { CustomButton as Button } from "@/lib/AntdComponents";
 import { Drawer } from "antd";
+import { formatDate } from "@/components/helper/dateFormat";
 
 interface TransactionDrawerProps {
   open: boolean;
   onClose: () => void;
+  data: any;
 }
 
 const TransactionDrawer: React.FC<TransactionDrawerProps> = ({
   open,
   onClose,
+  data,
 }) => {
+  const {
+    amount = 0,
+    created_at = "",
+    customer_name = "",
+    bank_name = "",
+    account_number = "",
+    narration = "",
+    tx_type = "",
+  } = data || {};
+  const renderAmount = () => {
+    if (tx_type === "credit") {
+      return (
+        <h1 className="font-bold text-3xl text-green-500">+NGN {amount}</h1>
+      );
+    } else if (tx_type === "debit") {
+      return <h1 className="font-bold text-3xl text-red-500">-NGN {amount}</h1>;
+    } else {
+      return <h1 className="font-bold text-3xl">NGN {amount}</h1>;
+    }
+  };
+
   return (
-    <Drawer onClose={onClose} open={open} width={500}>
-      <div className="flex flex-col gap-4 text-[#515B6F]">
-        <span className="flex flex-col gap-2 items-center justify-center bg-[#FAFAFA] rounded-[5px] text-center h-[183px]">
-          <p className="text-[#0AA07B] text-[28px] font-bold">+N 200,000.00</p>
-          <p className="uppercase text-[#515B6F] text-[18px]">John David Doe</p>
-        </span>
-        <p className="font-bold text-[18px] capitalize">
-          transaction information
-        </p>
-
-        <div className="flex flex-col gap-4 p-6 shadow-md shadow-[#0000001A]">
-          <span className="flex gap-6 justify-between text-[14px]">
-            <p className="">Amount</p>
-            <p className="text-[#181336] font-medium">+200,000.00</p>
-          </span>
-          <span className="flex gap-6 justify-between text-[14px]">
-            <p className="">Date</p>
-            <p className="text-[#181336] font-medium">
-              24 July,2023 1:38:28 PM
-            </p>
-          </span>
-          <span className="flex gap-6 justify-between text-[14px]">
-            <p className="">Counterparty</p>
-            <p className="text-[#181336] font-medium capitalize">
-              john David doe
-            </p>
-          </span>
-          <span className="flex gap-6 justify-between text-[14px]">
-            <p className="">Bank Name</p>
-            <p className="text-[#181336] font-medium capitalize">First Bank</p>
-          </span>
-          <span className="flex gap-6 justify-between text-[14px]">
-            <p className="">Account Number</p>
-            <p className="text-[#181336] font-medium">05596746787</p>
-          </span>
-          <span className="flex gap-6 justify-between text-[14px]">
-            <p className="">Source</p>
-            <p className="text-[#181336] font-medium capitalize">
-              PursBusiness main Account
-            </p>
-          </span>
-
-          <hr />
-          <span className="flex flex-col gap-1">
-            <p className="text-[#181336] font-semibold capitalize">
-              Transaction Memo
-            </p>
-            <p className="">inward transfer from King and Son</p>
-          </span>
+    <Drawer
+      onClose={onClose}
+      open={open}
+      title={null}
+      placement="right"
+      width={500}
+      getContainer={false}
+      closable={true}
+      style={{ position: "absolute", padding: 0 }}
+    >
+      <div id="receipt" className="space-y-8 py-4">
+        <div className="bg-slate-100 h-[150px] w-full flex flex-col justify-center items-center">
+          {renderAmount()}
+          <p className="text-xl">{customer_name}</p>
         </div>
 
-        <Button className="!bg-black !text-white !text-base !font-medium !py-[12px]">
+        <div>
+          <h2 className="font-semibold text-xl">Transaction Information</h2>
+        </div>
+        <div className="p-4 border rounded-md space-y-6 border-[#FAFAFA]">
+          <div className="w-full flex justify-between">
+            <span>Amount</span>
+            <span className="font-bold">{`NGN ${amount}`}</span>
+          </div>
+
+          <div className="w-full flex justify-between">
+            <span>Date</span>
+            <span>{formatDate(created_at)}</span>
+          </div>
+
+          <div className="w-full flex justify-between">
+            <span>Bank Name</span>
+            <span>{bank_name || "N/A"}</span>
+          </div>
+
+          <div className="w-full flex justify-between">
+            <span>Account Number</span>
+            <span>{account_number}</span>
+          </div>
+
+          <div className="w-full flex justify-between">
+            <span>Narration</span>
+            <span>{narration}</span>
+          </div>
+          <hr />
+
+          <div className="w-full">
+            <h4 className="font-bold text-md">Transaction Memo</h4>
+            <p>{narration}</p>
+          </div>
+        </div>
+        <button
+          onClick={() => window.print()}
+          className="w-full text-center h-[50px] bg-black text-white rounded mb-4 font-semibold"
+        >
           Download Receipt
-        </Button>
-        <Button className="!text-base !font-medium !py-[12px]">
+        </button>
+        <button className="w-full text-center h-[50px] bg-white text-black border border-slate-200 rounded font-semibold">
           Report Transaction
-        </Button>
+        </button>
       </div>
     </Drawer>
   );

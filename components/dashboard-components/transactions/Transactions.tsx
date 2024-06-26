@@ -1,28 +1,31 @@
-import React from "react";
+"use client";
 import TransactionsTable from "./TransactionsTable";
 import { BoxIcon, HistoryIcon, PeopleIcon } from "@/assets/svg/AccountsIcons";
 import { HiMiniArrowTrendingUp } from "react-icons/hi2";
+import { useGetTransacSummaryQuery } from "@/services/auth/index.service";
 
 const Transactions = () => {
+  const { data } = useGetTransacSummaryQuery({});
+
   const cards = [
     {
       title: "Total Transactions",
-      value: "40,689",
-      change: "8.5",
+      value: data?.data?.total_transactions?.total || "0",
+      change: data?.data?.total_transactions?.pf,
       iconBgColor: "#8280FF",
       icon: <PeopleIcon />,
     },
     {
       title: "Total Failed Transactions",
-      value: "98,000",
-      change: "1.8",
+      value: data?.data?.failed_transactions?.total || "0",
+      change: data?.data?.failed_transactions?.pf,
       iconBgColor: "#FF9066",
       icon: <HistoryIcon />,
     },
     {
       title: "Total Pending Transactions",
-      value: "10,293",
-      change: "1.3",
+      value: data?.data?.pending_transactions?.total || "0",
+      change: data?.data?.pending_transactions?.pf,
       iconBgColor: "#FEC53D",
       icon: <BoxIcon />,
     },
@@ -63,11 +66,6 @@ const Transactions = () => {
             >
               {item.icon}
             </span>
-            {/* <span
-              className={`bg-[${item.iconBgColor}]/20 rounded-full flex justify-center items-center w-[60px] h-[60px]`}
-            >
-              {item.icon}
-            </span> */}
           </div>
         ))}
       </div>

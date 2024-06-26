@@ -10,6 +10,8 @@ import type { TableColumnsType } from "antd";
 import { DatePicker, Drawer } from "antd";
 import FilterIcon from "@/assets/svg/FilterIcon";
 import TransactionDrawer from "./TransactionDrawer";
+import { useGetTransactionQuery } from "@/services/auth/index.service";
+import { formatDate } from "@/components/helper/dateFormat";
 
 const { RangePicker } = DatePicker;
 
@@ -61,8 +63,10 @@ const data: DataType[] = [
 
 const TransactionsTable = () => {
   const [open, setOpen] = useState(false);
-
-  const showDrawer = () => {
+  const [selectedRecord, setSelectedRecord] = useState<any>(null);
+  const { data, isLoading } = useGetTransactionQuery({});
+  const showDrawer = (record: any) => {
+    setSelectedRecord(record);
     setOpen(true);
   };
 
@@ -73,22 +77,23 @@ const TransactionsTable = () => {
   const columns: TableColumnsType<DataType> = [
     {
       title: "Date",
-      dataIndex: "date",
+      dataIndex: "created_at",
       sorter: true,
+      render: (date) => formatDate(date),
     },
     {
       title: "Account Name",
-      dataIndex: "accountName",
+      dataIndex: "customer_name",
       sorter: true,
     },
     {
       title: "Bank Name",
-      dataIndex: "bankName",
+      dataIndex: "bank_name",
       sorter: true,
     },
     {
       title: "Account Number",
-      dataIndex: "accountNumber",
+      dataIndex: "account_number",
       sorter: true,
     },
     {
@@ -122,7 +127,7 @@ const TransactionsTable = () => {
           type="button"
           className="text-lg font-semibold"
           title="Details"
-          onClick={showDrawer}
+          onClick={()=>showDrawer(_record)}
         >
           ...
         </button>
@@ -138,7 +143,6 @@ const TransactionsTable = () => {
           <RangePicker />
           <Select
             placeholder="Amount"
-            // defaultValue=""
             style={{ width: 120 }}
             options={[
               { value: "Amount1", label: "Amount" },
@@ -153,8 +157,8 @@ const TransactionsTable = () => {
         </Button>
       </div>
 
-      <Table columns={columns} dataSource={data} />
-      <TransactionDrawer open={open} onClose={onClose} />
+      <Table columns={columns} dataSource={data?.data} loading={isLoading} />
+      <TransactionDrawer open={open} onClose={onClose} data={selectedRecord}/>
     </section>
   );
 };

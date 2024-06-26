@@ -163,6 +163,20 @@ const authSlice = ApiSlice.enhanceEndpoints({
       }),
       invalidatesTags: ["developer"],
     }),
+    activateWebhook: builder.mutation({
+      query: (id) => ({
+        url: `admin/businesses/developers/webhooks/${id}/activate`,
+        method: "POST",
+      }),
+      invalidatesTags: ["developer"],
+    }),
+    deactivateWebhook: builder.mutation({
+      query: (id) => ({
+        url: `admin/businesses/developers/webhooks/${id}/deactivate`,
+        method: "POST",
+      }),
+      invalidatesTags: ["developer"],
+    }),
     deleteIP: builder.mutation({
       query: (id) => ({
         url: `users/ip-address/${id}`,
@@ -170,9 +184,35 @@ const authSlice = ApiSlice.enhanceEndpoints({
       }),
       invalidatesTags: ["developer"],
     }),
+    activateIP: builder.mutation({
+      query: (id) => ({
+        url: `admin/businesses/developers/ipaddress/${id}/activate`,
+        method: "POST",
+      }),
+      invalidatesTags: ["developer"],
+    }),
+    deactivateIP: builder.mutation({
+      query: (id) => ({
+        url: `admin/businesses/developers/ipaddress/${id}/deactivate`,
+        method: "POST",
+      }),
+      invalidatesTags: ["developer"],
+    }),
     getDeveloperSummary: builder.query({
       query: () => ({
         url: "admin/businesses/developers/summary",
+        method: "GET",
+      }),
+    }),
+    getTransacSummary: builder.query({
+      query: () => ({
+        url: "admin/transactions/summary",
+        method: "GET",
+      }),
+    }),
+    getTransaction: builder.query({
+      query: () => ({
+        url: "/admin/transactions",
         method: "GET",
       }),
     }),
@@ -202,6 +242,12 @@ export const {
   useGetBusinessDeveloperKeyQuery,
   useDeleteApikeyMutation,
   useDeleteWebHookeyMutation,
+  useActivateWebhookMutation,
+  useDeactivateWebhookMutation,
   useDeleteIPMutation,
-  useGetDeveloperSummaryQuery
+  useActivateIPMutation,
+  useDeactivateIPMutation,
+  useGetDeveloperSummaryQuery,
+  useGetTransacSummaryQuery,
+  useGetTransactionQuery,
 } = authSlice;
