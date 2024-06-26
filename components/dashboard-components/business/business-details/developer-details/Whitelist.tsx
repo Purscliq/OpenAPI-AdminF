@@ -2,13 +2,13 @@
 
 import React from "react";
 import {
-  CustomButton as Button,
   CustomTable as Table,
 } from "@/lib/AntdComponents";
 import type { TableColumnsType } from "antd";
 import DeleteIcon from "@/assets/svg/DeleteIcon";
 import {
   useActivateIPMutation,
+  useDeactivateIPMutation,
   useDeleteIPMutation,
 } from "@/services/auth/index.service";
 
@@ -49,7 +49,8 @@ const ActivateButton = ({
   isActive: boolean;
 }) => {
   const [activateIP, { isLoading: isActivating }] = useActivateIPMutation();
-  const [deactivateIP, { isLoading: isDeactivating }] = useDeleteIPMutation();
+  const [deactivateIP, { isLoading: isDeactivating }] =
+    useDeactivateIPMutation();
 
   const handleToggle = async () => {
     try {
@@ -110,8 +111,7 @@ const columns: TableColumnsType<DataType> = [
     dataIndex: "id",
     render: (id: any, _record: DataType) => (
       <span className="flex gap-6 items-center">
-        <ActivateButton id={id} isActive={_record.is_active} />{" "}
-        <p>Activate</p>
+        <ActivateButton id={id} isActive={_record.is_active} /> <p>Activate</p>
         <DeleteButton id={id} />
       </span>
     ),

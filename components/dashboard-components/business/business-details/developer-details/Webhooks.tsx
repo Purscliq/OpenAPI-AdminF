@@ -128,11 +128,17 @@ const columns: TableColumnsType<DataType> = [
   },
 ];
 
-const Webhooks = ({ data }: { data: DataType[] }) => {
+const Webhooks = ({
+  data,
+  loading,
+}: {
+  data: DataType[];
+  loading: boolean;
+}) => {
   return (
     <section className="max-w-[1640px] h-full overflow-x-scroll md:overflow-x-clip py-4 px-2 space-y-4">
       <p className="font-bold text-base">{data?.length} Webhook(s)</p>
-      <Table columns={columns} dataSource={data} />
+      <Table columns={columns} dataSource={data} loading={loading} />
     </section>
   );
 };
