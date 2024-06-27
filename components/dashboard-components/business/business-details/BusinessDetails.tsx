@@ -15,11 +15,22 @@ import {
 
 const BusinessDetails = () => {
   const router = useRouter();
-  const id = sessionStorage.getItem("id");
+  const [id, setId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const storedId = sessionStorage.getItem("id");
+    setId(storedId);
+  }, []);
   const { data: businessDetails, isLoading: isgettingBusiness } =
-    useGetsingleBusinessDetailsQuery(id);
-  const { data: customers, isLoading: isgettingCustomer } =
-    useGetCustomerQuery(id);
+    useGetsingleBusinessDetailsQuery(id, {
+      skip: !id,
+    });
+  const { data: customers, isLoading: isgettingCustomer } = useGetCustomerQuery(
+    id,
+    {
+      skip: !id,
+    }
+  );
 
   const items: TabsProps["items"] = [
     {
