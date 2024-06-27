@@ -28,11 +28,11 @@ const columns: TableColumnsType<DataType> = [
     dataIndex: "service_id",
     sorter: true,
   },
-  {
-    title: "Expiry Date",
-    dataIndex: "expiry",
-    sorter: true,
-  },
+  // {
+  //   title: "Expiry Date",
+  //   dataIndex: "expiry",
+  //   sorter: true,
+  // },
   {
     title: "",
     dataIndex: "id",

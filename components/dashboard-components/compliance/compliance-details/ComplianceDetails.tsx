@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { CustomTabs as Tabs } from "@/lib/AntdComponents";
 import { TabsProps } from "antd";
@@ -15,11 +15,23 @@ import KYCTabs from "./KYCTabs";
 
 const ComplianceDetails = () => {
   const router = useRouter();
-  const id = sessionStorage.getItem("session_id");
-  const { data: compliance, isLoading } = useGetComplianceDetailsQuery(id);
+  const [id, setId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const storedId = sessionStorage.getItem("session_id");
+    setId(storedId);
+  }, []);
+
+  const { data: compliance, isLoading } = useGetComplianceDetailsQuery(id, {
+    skip: !id,
+  });
   const { data: businessDetails, isLoading: isgettingBusiness } =
-    useGetsingleBusinessDetailsQuery(id);
-  const { data: KYC } = useGetSingleDetailsKYCQuery(id);
+    useGetsingleBusinessDetailsQuery(id, {
+      skip: !id,
+    });
+  const { data: KYC } = useGetSingleDetailsKYCQuery(id, {
+    skip: !id,
+  });
 
   const items: TabsProps["items"] = [
     {

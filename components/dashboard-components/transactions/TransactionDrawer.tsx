@@ -76,6 +76,10 @@ const TransactionDrawer: React.FC<TransactionDrawerProps> = ({
           </div>
 
           <div className="w-full flex justify-between">
+            <span>Transaction Type</span>
+            <span>{tx_type}</span>
+          </div>
+          <div className="w-full flex justify-between">
             <span>Narration</span>
             <span>{narration}</span>
           </div>

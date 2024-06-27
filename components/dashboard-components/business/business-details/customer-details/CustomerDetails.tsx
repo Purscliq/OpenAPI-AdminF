@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { CustomTabs as Tabs } from "@/lib/AntdComponents";
@@ -16,10 +16,15 @@ import {
 
 const CustomerDetails = () => {
   const router = useRouter();
-  const customer_id = sessionStorage.getItem("customer_id");
-  const { data: customerDetails, isLoading:isdetails } =
-    useGetCostomerDetailsQuery(customer_id);
-  const { data: cutomerKyc, isLoading } = useGetCostomerKYCQuery(customer_id);
+  const [id, setId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const storedId = sessionStorage.getItem("customer_id");
+    setId(storedId);
+  }, []);
+  const { data: customerDetails, isLoading: isdetails } =
+    useGetCostomerDetailsQuery(id);
+  const { data: cutomerKyc } = useGetCostomerKYCQuery(id);
   const items: TabsProps["items"] = [
     {
       key: "1",
@@ -36,7 +41,7 @@ const CustomerDetails = () => {
     {
       key: "3",
       label: "Transactions",
-      children: <TransactionsTab  data={customerDetails?.data} />,
+      children: <TransactionsTab data={customerDetails?.data} />,
     },
   ];
 

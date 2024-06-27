@@ -23,6 +23,7 @@ const ResetPassword = () => {
   const [validationError, setValidationError] = useState("");
   const [confirmValidationError, setConfirmValidationError] = useState("");
   const searchParams = useSearchParams();
+
   useEffect(() => {
     const email = searchParams.get("email");
     const token = searchParams.get("token");
@@ -35,6 +36,7 @@ const ResetPassword = () => {
       update_type: updateType || "",
     }));
   }, [searchParams]);
+
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     if (e.target.name === "password")
       passwordSchema
@@ -68,16 +70,17 @@ const ResetPassword = () => {
         });
     }
   };
+
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <div className="min-h-screen flex flex-col justify-center max-w-[1640px] bg-[url('/bg.png')] bg-cover bg-no-repeat p-8 md:p-0">
-        <main className=" flex flex-col items-center justify-center bg-white rounded-3xl w-full md:w-[560px] mx-auto px-8 py-16">
+        <main className="flex flex-col items-center justify-center bg-white rounded-3xl w-full md:w-[560px] mx-auto px-8 py-16">
           <div className="space-y-8 w-full">
             <span className="space-y-2 text-center">
               <h1 className="font-bold text-[18px] md:text-[32px] text-[#000000]">
                 Password Reset
               </h1>
-              <p className=" text-gray-700 md:text-[18px] text-[14px]">
+              <p className="text-gray-700 md:text-[18px] text-[14px]">
                 Kindly enter a new password
               </p>
             </span>
@@ -118,12 +121,12 @@ const ResetPassword = () => {
                   placeholder="Enter Password"
                   type="password"
                   required
-                  value={formData.password}
+                  value={formData.password2}
                   name="password2"
                   onChange={handleChange}
                 />
                 {formData.password2 && confirmValidationError && (
-                  <p>{validationError}</p>
+                  <p>{confirmValidationError}</p>
                 )}
               </div>
 
@@ -137,7 +140,7 @@ const ResetPassword = () => {
                 </Button>
               </span>
             </Form>
-          </div>{" "}
+          </div>
         </main>
       </div>
     </Suspense>
