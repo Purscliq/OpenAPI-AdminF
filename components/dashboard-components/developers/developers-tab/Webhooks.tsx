@@ -14,10 +14,9 @@ import {
 } from "@/services/auth/index.service";
 
 interface DataType {
-  key: React.Key;
   name: string;
   url: string;
-  contentType: string;
+  service_id: number;
   is_active: boolean;
 }
 
@@ -71,6 +70,7 @@ const ActivateButton = ({
       );
     }
   };
+  
 
   return (
     <button
@@ -86,7 +86,7 @@ const ActivateButton = ({
       >
         <input
           type="checkbox"
-          id={`toggle-${id}-${Math.random()}`}
+          id={`toggle-${id}`}
           className="peer sr-only"
           checked={isActive}
           readOnly
@@ -112,8 +112,8 @@ const columns: TableColumnsType<DataType> = [
     sorter: true,
   },
   {
-    title: "Content Type",
-    dataIndex: "contentType",
+    title: "service_id",
+    dataIndex: "service_id",
     sorter: true,
   },
   {
@@ -128,11 +128,17 @@ const columns: TableColumnsType<DataType> = [
   },
 ];
 
-const Webhooks = ({ data }: { data: DataType[] }) => {
+const Webhooks = ({
+  data,
+  loading,
+}: {
+  data: DataType[];
+  loading: boolean;
+}) => {
   return (
     <section className="max-w-[1640px] h-full overflow-x-scroll md:overflow-x-clip py-4 px-2 space-y-4">
       <p className="font-bold text-base">{data?.length} Webhook(s)</p>
-      <Table columns={columns} dataSource={data} />
+      <Table columns={columns} dataSource={data} loading={loading} />
     </section>
   );
 };

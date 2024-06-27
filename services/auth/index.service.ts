@@ -149,6 +149,13 @@ const authSlice = ApiSlice.enhanceEndpoints({
       }),
       providesTags: ["developer"],
     }),
+    getDeveloperKey: builder.query({
+      query: () => ({
+        url: `admin/businesses/developers/resources`,
+        method: "GET",
+      }),
+      providesTags: ["developer"],
+    }),
     deleteApikey: builder.mutation({
       query: (id) => ({
         url: `auth/api_keys/${id}`,
@@ -248,6 +255,7 @@ export const {
   useActivateIPMutation,
   useDeactivateIPMutation,
   useGetDeveloperSummaryQuery,
+  useGetDeveloperKeyQuery,
   useGetTransacSummaryQuery,
   useGetTransactionQuery,
 } = authSlice;

@@ -6,14 +6,13 @@ import APIKeys from "./developers-tab/APIKeys";
 import Webhooks from "./developers-tab/Webhooks";
 import Whitelist from "./developers-tab/Whitelist";
 import {
-  useGetBusinessDeveloperKeyQuery,
+  useGetDeveloperKeyQuery,
   useGetDeveloperSummaryQuery,
 } from "@/services/auth/index.service";
 
 const Developers = () => {
-  const id = sessionStorage.getItem("id");
   const { data } = useGetDeveloperSummaryQuery({});
-  const { data: developer, isLoading } = useGetBusinessDeveloperKeyQuery(id);
+  const { data: developer, isLoading } = useGetDeveloperKeyQuery({});
 
   const summaryData = data?.data || {
     api_key: { total: 0, pf: 0 },

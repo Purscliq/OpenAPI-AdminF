@@ -14,10 +14,9 @@ import {
 } from "@/services/auth/index.service";
 
 interface DataType {
-  key: React.Key;
   name: string;
   url: string;
-  contentType: string;
+  service_id: number;
   is_active: boolean;
 }
 
@@ -71,6 +70,7 @@ const ActivateButton = ({
       );
     }
   };
+  
 
   return (
     <button
@@ -86,7 +86,7 @@ const ActivateButton = ({
       >
         <input
           type="checkbox"
-          id={`toggle-${id}-${Math.random()}`}
+          id={`toggle-${id}`}
           className="peer sr-only"
           checked={isActive}
           readOnly
@@ -112,8 +112,8 @@ const columns: TableColumnsType<DataType> = [
     sorter: true,
   },
   {
-    title: "Content Type",
-    dataIndex: "contentType",
+    title: "service_id",
+    dataIndex: "service_id",
     sorter: true,
   },
   {
