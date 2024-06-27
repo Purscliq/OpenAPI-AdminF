@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { CustomTabs as Tabs } from "@/lib/AntdComponents";
 import { TabsProps } from "antd";
@@ -12,8 +12,15 @@ import { useGetsingleAccountDetailsQuery } from "@/services/auth/index.service";
 
 const AccountDetails = () => {
   const router = useRouter();
-  const id = sessionStorage.getItem("account_id");
-  const { data: account, isLoading } = useGetsingleAccountDetailsQuery(id);
+  const [id, setId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const storedId = sessionStorage.getItem("account_id");
+    setId(storedId);
+  }, []);
+  const { data: account, isLoading } = useGetsingleAccountDetailsQuery(id, {
+    skip: !id,
+  });
 
   const items: TabsProps["items"] = [
     // {
@@ -29,7 +36,7 @@ const AccountDetails = () => {
     {
       key: "2",
       label: "Loan Account",
-      children: <LoanAccountTab data={account?.data?.loan_accounts || []}/>,
+      children: <LoanAccountTab data={account?.data?.loan_accounts || []} />,
     },
   ];
 
