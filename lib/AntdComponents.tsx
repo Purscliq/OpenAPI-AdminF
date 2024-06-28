@@ -38,11 +38,16 @@ import {
   Segmented,
 } from "antd";
 import { TextAreaProps } from "antd/es/input";
-import { Archivo } from "next/font/google";
+import { Zen_Kaku_Gothic_Antique } from "next/font/google";
 import React from "react";
-const archivo = Archivo({ subsets: ["latin"] });
+
+const zen = Zen_Kaku_Gothic_Antique({
+  weight: ["400", "700"],
+  subsets: ["latin"],
+});
+
 const primaryConfig = {
-  fontFamily: archivo.style.fontFamily,
+  fontFamily: zen.style.fontFamily,
   colorPrimary: "#000000",
 };
 
@@ -215,7 +220,7 @@ export const CustomMenu = ({ ...props }: MenuProps) => (
   </ConfigProvider>
 );
 const secConfig = {
-  fontFamily: archivo.style.fontFamily,
+  fontFamily: zen.style.fontFamily,
   colorPrimary: "#0000",
 };
 export const CustomTabs = ({ ...props }: TabsProps) => (
@@ -225,7 +230,7 @@ export const CustomTabs = ({ ...props }: TabsProps) => (
       components: {
         Tabs: {
           itemSelectedColor: "#000000",
-          colorLinkActive: "#000000", 
+          colorLinkActive: "#000000",
           itemColor: "#515B6F",
           fontSize: 16,
           fontWeightStrong: 600,
