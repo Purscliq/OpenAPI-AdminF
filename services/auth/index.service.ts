@@ -1,7 +1,7 @@
 import { ApiSlice } from "..";
 
 const authSlice = ApiSlice.enhanceEndpoints({
-  addTagTypes: ["developer"],
+  addTagTypes: ["developer", "roles", "members"],
 }).injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation({
@@ -223,6 +223,55 @@ const authSlice = ApiSlice.enhanceEndpoints({
         method: "GET",
       }),
     }),
+    getMemberRoles: builder.query({
+      query: () => ({
+        url: "admin/roles-permission/users",
+        method: "GET",
+      }),
+      providesTags: ["members"],
+    }),
+    addMemberRoles: builder.mutation({
+      query: (body) => ({
+        url: "admin/roles-permission/users/new",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["members"],
+    }),
+    getRoles: builder.query({
+      query: () => ({
+        url: "admin/roles-permission/roles",
+        method: "GET",
+      }),
+      providesTags: ["roles"],
+    }),
+    getRolesPermisson: builder.query({
+      query: (id) => ({
+        url: `admin/roles-permission/roles/${id}/permissions`,
+        method: "GET",
+      }),
+    }),
+    addRoles: builder.mutation({
+      query: (body) => ({
+        url: "admin/roles-permission/roles",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["roles"],
+    }),
+    getPermisson: builder.query({
+      query: () => ({
+        url: "admin/roles-permission/permissions",
+        method: "GET",
+      }),
+    }),
+    addPermission: builder.mutation({
+      query: (body) => ({
+        url: "admin/roles-permission/permissions ",
+        method: "POST",
+        body,
+      }),
+    }),
   }),
 });
 export const {
@@ -258,4 +307,11 @@ export const {
   useGetDeveloperKeyQuery,
   useGetTransacSummaryQuery,
   useGetTransactionQuery,
+  useGetMemberRolesQuery,
+  useAddMemberRolesMutation,
+  useGetRolesQuery,
+  useLazyGetRolesPermissonQuery,
+  useAddRolesMutation,
+  useGetPermissonQuery,
+  useAddPermissionMutation,
 } = authSlice;

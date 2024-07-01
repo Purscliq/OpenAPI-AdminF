@@ -10,59 +10,21 @@ import type { ColumnsType, TablePaginationConfig } from "antd/es/table";
 import { HiMiniChevronUpDown } from "react-icons/hi2";
 import { FiEdit } from "react-icons/fi";
 import AddMembersModal from "../AddMembersModal";
+import { useGetMemberRolesQuery } from "@/services/auth/index.service";
 
 interface DataType {
   id: number;
-  fullName: string;
-  roles: string;
-  lastActive: string;
+  first_name: string;
+  last_name: string;
+
+  email: string;
+  role: string;
+  last_active: string | null;
   status: string;
 }
-
-export interface TableParams {
-  pagination?: TablePaginationConfig;
-}
-
-export const MembersTabData = [
-  {
-    id: 1,
-    fullName: "Tope Hope",
-    roles: "Operation Manager",
-    lastActive: "24,July 2024",
-    status: "Active",
-  },
-  {
-    id: 2,
-    fullName: "Tope Hope",
-    roles: "Operation Manager",
-    lastActive: "24,July 2024",
-    status: "Active",
-  },
-  {
-    id: 3,
-    fullName: "Tope Hope",
-    roles: "Operation Manager",
-    lastActive: "24,July 2024",
-    status: "Active",
-  },
-  {
-    id: 4,
-    fullName: "Tope Hope",
-    roles: "Operation Manager",
-    lastActive: "24,July 2024",
-    status: "Active",
-  },
-];
-
 const MembersTab = () => {
-  const [RolesAndPermissionsData, setRolesAndPermissionsData] =
-    useState<DataType[]>(MembersTabData);
-  const [tableParams, setTableParams] = useState<TableParams>({
-    pagination: {
-      current: 1,
-      pageSize: 10,
-    },
-  });
+  const { data: members, isLoading } = useGetMemberRolesQuery({});
+
   const columns: ColumnsType<DataType> = [
     {
       title: "#",
@@ -74,12 +36,13 @@ const MembersTab = () => {
     {
       title: "Full Name",
       sorter: true,
-      dataIndex: "fullName",
-      //   render: (fullName) => `${fullName}`,
-      render: () => (
+      dataIndex: "",
+      render: (_, record) => (
         <span className="flex flex-col gap-2">
-          <p className="text-[#25324B]  text-base">Tope Hope</p>
-          <p className="text-[#555F7E] text-sm">yourmail@Gox.com</p>
+          <p className="text-[#25324B] text-base">
+            {record.first_name} {record.last_name}
+          </p>
+          <p className="text-[#555F7E] text-sm">{record.email}</p>
         </span>
       ),
       width: "20%",
@@ -87,26 +50,28 @@ const MembersTab = () => {
     {
       title: "Roles",
       sorter: true,
-      dataIndex: "roles",
-      render: (roles) => `${roles}`,
+      dataIndex: "role",
+      // render: (roles) => `${roles}`,
       width: "20%",
     },
-
     {
       title: "Last Active",
       sorter: true,
       dataIndex: "lastActive",
-      render: (lastActive) => `${lastActive}`,
+      render: (lastActive) => (lastActive ? `${lastActive}` : "N/A"),
       width: "20%",
     },
     {
       title: "Status",
       sorter: true,
       dataIndex: "status",
-      // render: (status) => `${status}`,
-      render: () => (
-        <p className="text-black bg-[#2AD0621A] rounded-[5rem] py-[0.375rem] px-[0.625rem] w-max text-sm">
-          Active
+      render: (status) => (
+        <p
+          className={`text-black rounded-[5rem] py-[0.375rem] px-[0.625rem] w-max text-sm ${
+            status === "Active" ? "bg-[#2AD0621A]" : "bg-[#FF57331A]"
+          }`}
+        >
+          {status}
         </p>
       ),
       width: "20%",
@@ -124,19 +89,13 @@ const MembersTab = () => {
     },
   ];
 
-  const handleTableChange = (pagination: TablePaginationConfig) => {
-    setTableParams({
-      pagination,
-    });
-    if (pagination.pageSize !== tableParams.pagination?.pageSize) {
-      setRolesAndPermissionsData([]);
-    }
-  };
   return (
     <div className="">
       <div className="w-full md:max-h-24 md:flex justify-between md:px-4 py-6 bg-white">
         <span>
-          <h1 className="text-[20px] text-[#25324B] py-2">50 Members</h1>
+          <h1 className="text-[20px] text-[#25324B] py-2">{`${
+            members?.data?.count || 0
+          } Members`}</h1>
         </span>
         <div className="md:flex space-y-2 md:space-y-0 gap-2">
           <div className="relative w-full md:w-[19rem]">
@@ -159,13 +118,13 @@ const MembersTab = () => {
         </div>
       </div>
 
-      {/* Payment table */}
+      {/* Members table */}
       <div className="bg-white overflow-x-auto">
         <Table
           columns={columns}
-          dataSource={RolesAndPermissionsData}
-          pagination={tableParams.pagination}
-          onChange={handleTableChange}
+          dataSource={members?.data?.users}
+          pagination={{ pageSize: 5 }}
+          loading={isLoading}
         />
       </div>
     </div>
