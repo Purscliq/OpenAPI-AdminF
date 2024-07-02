@@ -41,7 +41,7 @@ const authSlice = ApiSlice.enhanceEndpoints({
     }),
     resetPassword: builder.mutation({
       query: (body) => ({
-        url: "auth/update-forgotten-password",
+        url: "auth/reset-password",
         method: "POST",
         body,
       }),
@@ -259,6 +259,12 @@ const authSlice = ApiSlice.enhanceEndpoints({
       }),
       invalidatesTags: ["roles"],
     }),
+    getUserole: builder.query({
+      query: () => ({
+        url: "users/user-roles",
+        method: "GET",
+      }),
+    }),
     getPermisson: builder.query({
       query: () => ({
         url: "admin/roles-permission/permissions",
@@ -270,6 +276,12 @@ const authSlice = ApiSlice.enhanceEndpoints({
         url: "admin/roles-permission/permissions ",
         method: "POST",
         body,
+      }),
+    }),
+    getUser: builder.query({
+      query: () => ({
+        url: "users/user",
+        method: "GET",
       }),
     }),
   }),
@@ -314,4 +326,6 @@ export const {
   useAddRolesMutation,
   useGetPermissonQuery,
   useAddPermissionMutation,
+  useGetUserQuery,
+  useGetUseroleQuery,
 } = authSlice;
