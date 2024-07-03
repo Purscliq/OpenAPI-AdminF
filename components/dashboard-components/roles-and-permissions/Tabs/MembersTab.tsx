@@ -8,9 +8,10 @@ import { CiSearch } from "react-icons/ci";
 import { LuListFilter } from "react-icons/lu";
 import type { ColumnsType, TablePaginationConfig } from "antd/es/table";
 import { HiMiniChevronUpDown } from "react-icons/hi2";
-import { FiEdit } from "react-icons/fi";
+
 import AddMembersModal from "../AddMembersModal";
 import { useGetMemberRolesQuery } from "@/services/auth/index.service";
+import ChangeRolesModal from "../ChangeRolesModal";
 
 interface DataType {
   id: number;
@@ -78,14 +79,7 @@ const MembersTab = () => {
     },
     {
       title: <span className=""></span>,
-      render: () => (
-        <button type="button">
-          <p className="btn text-sm rounded-none normal-case text-[#8F9197] bg-white border border-[#CCCCF5] hover:text-black hover:border hover:border-black hover:bg-white/90 font-bold">
-            <FiEdit className="w-4 h-4" />
-            Change role
-          </p>
-        </button>
-      ),
+      render: () => <ChangeRolesModal />,
     },
   ];
 
