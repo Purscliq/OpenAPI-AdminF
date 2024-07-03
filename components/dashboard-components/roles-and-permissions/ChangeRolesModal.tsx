@@ -3,27 +3,37 @@
 import React, { useState } from "react";
 import { CustomModal } from "@/lib/AntdComponents";
 import {
+  useEditMemeberRolesMutation,
   useGetAllBusinessQuery,
   useGetRolesQuery,
 } from "@/services/auth/index.service";
-import { Spin } from "antd"; // Assuming you are using antd for the loading spinner
+import { Spin } from "antd";
 
 import { FiEdit } from "react-icons/fi";
 
-const ChangeRolesModal: React.FC = () => {
+const ChangeRolesModal = ({ id }: any) => {
   const { data: rolesData, isLoading: isLoadingRoles } = useGetRolesQuery({});
-  const { data: businessData, isLoading: isLoadingBusiness } =
-    useGetAllBusinessQuery({});
-
+  const [editMemeber, { isLoading }] = useEditMemeberRolesMutation({});
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedRole, setSelectedRole] = useState("");
 
-  const showModal = () => {
-    setIsModalOpen(true);
+  const handleRoleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedRole(e.target.value);
   };
-
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (selectedRole) {
+      try {
+        await editMemeber({ user_id: id, role_id: selectedRole }).unwrap();
+        setIsModalOpen(false);
+      } catch (error) {
+        console.error("Failed to update role:", error);
+      }
+    }
+  };
   return (
     <>
-      <button onClick={showModal} type="button">
+      <button onClick={() => setIsModalOpen(true)} type="button">
         <p className="btn text-sm rounded-none normal-case text-[#8F9197] bg-white border border-[#CCCCF5] hover:text-black hover:border hover:border-black hover:bg-white/90 font-bold">
           <FiEdit className="w-4 h-4" />
           Change role
@@ -41,12 +51,9 @@ const ChangeRolesModal: React.FC = () => {
             <h1 className="font-bold text-[#242F57] text-[1.5625rem]">
               Change User Role
             </h1>
-            {/* <p className="text-[#636E95] text-base">
-              This information can be created and edited
-            </p> */}
           </div>
-          <form className="mt-8 space-y-6">
-            <div className="space-y-1">
+          <form onSubmit={handleSubmit} className="mt-8 space-y-6">
+            {/* <div className="space-y-1">
               <label htmlFor="name" className="text-[#25324B] text-base">
                 Name
               </label>
@@ -67,7 +74,7 @@ const ChangeRolesModal: React.FC = () => {
                 disabled
                 className="w-full px-3 py-2 resize-none appearance-none bg-transparent outline-none border focus:border-black shadow-sm rounded-lg"
               />
-            </div>
+            </div> */}
             <div className="space-y-1">
               <label htmlFor="role" className="text-[#25324B] text-base">
                 Select Role
@@ -78,6 +85,8 @@ const ChangeRolesModal: React.FC = () => {
                 <select
                   id="role"
                   required
+                  value={selectedRole}
+                  onChange={handleRoleChange}
                   className="w-full px-3 py-2 resize-none appearance-none bg-transparent outline-none border focus:border-black shadow-sm rounded-lg"
                 >
                   <option value="">Select a role</option>
@@ -89,32 +98,12 @@ const ChangeRolesModal: React.FC = () => {
                 </select>
               )}
             </div>
-            <div className="space-y-1">
-              <label htmlFor="business" className="text-[#25324B] text-base">
-                Select Business
-              </label>
-              {isLoadingBusiness ? (
-                <Spin />
-              ) : (
-                <select
-                  id="business"
-                  disabled
-                  className="w-full px-3 py-2 resize-none appearance-none bg-transparent outline-none border focus:border-black shadow-sm rounded-lg"
-                >
-                  <option value="">Select a business</option>
-                  {businessData?.data?.map((data: any) => (
-                    <option key={data.id} value={data.id}>
-                      {data.name}
-                    </option>
-                  ))}
-                </select>
-              )}
-            </div>
             <button
               type="submit"
               className="bg-black text-white rounded-[0.25rem] w-full py-3 text-base mt-6"
+              disabled={isLoading}
             >
-              Update Role
+              {isLoading ? "Updating..." : "Update Role"}
             </button>
           </form>
         </div>

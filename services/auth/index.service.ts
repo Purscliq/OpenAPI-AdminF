@@ -238,6 +238,15 @@ const authSlice = ApiSlice.enhanceEndpoints({
       }),
       invalidatesTags: ["members"],
     }),
+    editMemeberRoles: builder.mutation({
+      query: (body) => ({
+        url: "admin/roles-permission/users/change_role",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["members"],
+    }),
+
     getRoles: builder.query({
       query: () => ({
         url: "admin/roles-permission/roles",
@@ -265,6 +274,7 @@ const authSlice = ApiSlice.enhanceEndpoints({
         method: "GET",
       }),
     }),
+
     getPermisson: builder.query({
       query: () => ({
         url: "admin/roles-permission/permissions",
@@ -321,6 +331,7 @@ export const {
   useGetTransactionQuery,
   useGetMemberRolesQuery,
   useAddMemberRolesMutation,
+  useEditMemeberRolesMutation,
   useGetRolesQuery,
   useLazyGetRolesPermissonQuery,
   useAddRolesMutation,

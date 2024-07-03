@@ -79,7 +79,7 @@ const MembersTab = () => {
     },
     {
       title: <span className=""></span>,
-      render: () => <ChangeRolesModal />,
+      render: (_, record) => <ChangeRolesModal id={record.id} />,
     },
   ];
 
