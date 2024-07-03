@@ -294,6 +294,12 @@ const authSlice = ApiSlice.enhanceEndpoints({
         method: "GET",
       }),
     }),
+    getAllAdminactivitices: builder.query({
+      query: () => ({
+        url: "admin/activities",
+        method: "GET",
+      }),
+    }),
   }),
 });
 export const {
@@ -339,4 +345,5 @@ export const {
   useAddPermissionMutation,
   useGetUserQuery,
   useGetUseroleQuery,
+  useGetAllAdminactiviticesQuery
 } = authSlice;

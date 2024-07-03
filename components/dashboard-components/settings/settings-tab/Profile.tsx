@@ -8,7 +8,6 @@ import {
   useGetUseroleQuery,
   useResetPasswordMutation,
 } from "@/services/auth/index.service";
-import { CgSearchLoading } from "react-icons/cg";
 import { AiOutlineLoading } from "react-icons/ai";
 
 const Profile = () => {
