@@ -228,12 +228,15 @@ const Dashboard = () => {
           <div className="md:flex gap-6 justify-between w-full">
             <div className="space-y-2 md:max-w-[200px]">
               <p className="text-[20px] md:text-[32px] font-bold text-[#2E2E3A]">
-                ₦629,394
+                ₦ {data?.data?.earning_report?.total || "0"}{" "}
               </p>
               <div className="flex gap-2">
                 <span className="flex gap-2 items-center bg-[#1CA78B] rounded-full px-[10px] py-[2px]">
                   <FaArrowUp className="w-[12px] h-[12px] text-[#F0F4F9]" />
-                  <p className="text-[11px] font-medium text-white">8.5%</p>
+                  <p className="text-[11px] font-medium text-white">
+                    {" "}
+                    {data?.data?.earning_report?.pf || "0"}%
+                  </p>
                 </span>
                 <p className="text-[11px] font-bold text-[#2E2E3A]">
                   from last 10 days
@@ -247,7 +250,7 @@ const Dashboard = () => {
 
             <div className="w-full">
               {/* max-w-[500px] */}
-              <EarningsChart />
+              <EarningsChart data={data?.data?.earning_report?.chart} />
             </div>
           </div>
 
@@ -264,16 +267,18 @@ const Dashboard = () => {
               </span>
               <span className="flex gap-4 items-center">
                 <p className="text-base md:text-[20px] font-bold text-[#2E2E3A]">
-                  ₦21,224
+                  ₦ {data?.data?.earning_report?.inflow?.total || "0"}{" "}
                 </p>
                 <p className="text-[#FD4438] text-[15px] font-bold flex gap-1 items-center">
                   <FaArrowDown className="w-[12px] h-[12px] text-[FD4438]" />
-                  0.2%
+                  {data?.data?.earning_report?.inflow?.pf || "0"} %
                 </p>
               </span>
               <p className="text-[11px] font-bold">
-                <span className="text-[#FD4438]">-7 New</span> compared to 7
-                Days
+                <span className="text-[#FD4438]">
+                  {data?.data?.earning_report?.inflow?.new || "0"} New
+                </span>{" "}
+                compared to 7 Days
               </p>
               <div className="bg-[#1CA78B12] w-full h-1 rounded-full">
                 <div className="bg-[#1CA78B] w-[60%] h-1 rounded-l-full" />
@@ -290,16 +295,19 @@ const Dashboard = () => {
               </span>
               <span className="flex gap-4 items-center">
                 <p className="text-base md:text-[20px] font-bold text-[#2E2E3A]">
-                  ₦21,224
+                  ₦ {data?.data?.earning_report?.pending?.total || "0"}{" "}
                 </p>
                 <p className="text-[#FD4438] text-[15px] font-bold flex gap-1 items-center">
                   <FaArrowDown className="w-[12px] h-[12px] text-[FD4438]" />
-                  9%
+                  {data?.data?.earning_report?.pending?.pf || "0"} %
                 </p>
               </span>
               <p className="text-[11px] font-bold">
-                <span className="text-[#1CA78B]">+21 New</span> compared to 7
-                Days
+                <span className="text-[#1CA78B]">
+                  {" "}
+                  {data?.data?.earning_report?.pending?.new || "0"} New
+                </span>{" "}
+                compared to 7 Days
               </p>
               <div className="bg-[#FF99001A] w-full h-1 rounded-full">
                 <div className="bg-[#FFCF5C] w-[60%] h-1 rounded-l-full" />
@@ -318,16 +326,19 @@ const Dashboard = () => {
               </span>
               <span className="flex gap-4 items-center">
                 <p className="text-base md:text-[20px] font-bold text-[#2E2E3A]">
-                  ₦21,224
+                  ₦ {data?.data?.earning_report?.outflow?.total || "0"}{" "}
                 </p>
                 <p className="text-[#FD4438] text-[15px] font-bold flex gap-1 items-center">
                   <FaArrowDown className="w-[12px] h-[12px] text-[FD4438]" />
-                  12%
+                  {data?.data?.earning_report?.outflow?.pf || "0"} %
                 </p>
               </span>
               <p className="text-[11px] font-bold">
-                <span className="text-[#1CA78B]">+14 New</span> compared to 7
-                Days
+                <span className="text-[#1CA78B]">
+                  {" "}
+                  {data?.data?.earning_report?.outflow?.new || "0"} % New
+                </span>{" "}
+                compared to 7 Days
               </p>
               <div className="bg-[#0062FF1A] w-full h-1 rounded-full">
                 <div className="bg-[#0062FF] w-[60%] h-1 rounded-l-full" />
