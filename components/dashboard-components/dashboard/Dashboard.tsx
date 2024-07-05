@@ -22,6 +22,7 @@ import {
   useGetDashbaordQuery,
   useGetNotificationQuery,
   useGetRecentBusinessQuery,
+  useGetTransactionQuery,
 } from "@/services/auth/index.service";
 import { formatDate } from "@/components/helper/dateFormat";
 import { Skeleton } from "antd";
@@ -31,6 +32,8 @@ const Dashboard = () => {
   const { data: notification, isLoading } = useGetNotificationQuery({});
   const { data: business, isLoading: isBusinessloading } =
     useGetRecentBusinessQuery({});
+  const { data: transaction, isLoading: isTransacting } =
+    useGetTransactionQuery({});
 
   const cards = [
     {
@@ -357,76 +360,54 @@ const Dashboard = () => {
           <TransactionsChart />
 
           <div className="flex flex-col gap-4 justify-between">
-            <div className="flex gap-6 justify-between">
-              <span className="flex flex-col gap-2">
-                <p className="text-[15px] font-bold text-[#2E2E3A]">
-                  029830192
-                </p>
-                <span className="flex gap-2">
-                  <p className="text-[12px] text-black">22/2/2022</p>
-                  <p className="text-[12px] text-black">3:45:01 PM</p>
-                </span>
-              </span>
-              <span className="flex flex-col gap-2">
-                <p className="text-[#1CA78B] text-[11px] bg-[#1CA78B0D] px-[10px] rounded-[4px]">
-                  Successful
-                </p>
-                <p className="text-[15px] font-bold text-[#2E2E3A]">+ ₦350</p>
-              </span>
-            </div>
-            <hr className="border border-dashed" />
-            <div className="flex gap-6 justify-between">
-              <span className="flex flex-col gap-2">
-                <p className="text-[15px] font-bold text-[#2E2E3A]">
-                  029830192
-                </p>
-                <span className="flex gap-2">
-                  <p className="text-[12px] text-black">22/2/2022</p>
-                  <p className="text-[12px] text-black">3:45:01 PM</p>
-                </span>
-              </span>
-              <span className="flex flex-col gap-2">
-                <p className="text-[#1CA78B] text-[11px] bg-[#1CA78B0D] px-[10px] rounded-[4px]">
-                  Successful
-                </p>
-                <p className="text-[15px] font-bold text-[#2E2E3A]">+ ₦350</p>
-              </span>
-            </div>
-            <hr className="border border-dashed" />
-            <div className="flex gap-6 justify-between">
-              <span className="flex flex-col gap-2">
-                <p className="text-[15px] font-bold text-[#2E2E3A]">
-                  029830192
-                </p>
-                <span className="flex gap-2">
-                  <p className="text-[12px] text-black">22/2/2022</p>
-                  <p className="text-[12px] text-black">3:45:01 PM</p>
-                </span>
-              </span>
-              <span className="flex flex-col gap-2">
-                <p className="text-[#1CA78B] text-[11px] bg-[#1CA78B0D] px-[10px] rounded-[4px]">
-                  Successful
-                </p>
-                <p className="text-[15px] font-bold text-[#2E2E3A]">+ ₦350</p>
-              </span>
-            </div>
-            <hr className="border border-dashed" />
-            <div className="flex gap-6 justify-between">
-              <span className="flex flex-col gap-2">
-                <p className="text-[15px] font-bold text-[#2E2E3A]">
-                  029830192
-                </p>
-                <span className="flex gap-2">
-                  <p className="text-[12px] text-black">22/2/2022</p>
-                  <p className="text-[12px] text-black">3:45:01 PM</p>
-                </span>
-              </span>
-              <span className="flex flex-col gap-2">
-                <p className="text-[#1CA78B] text-[11px] bg-[#1CA78B0D] px-[10px] rounded-[4px]">
-                  Successful
-                </p>
-                <p className="text-[15px] font-bold text-[#2E2E3A]">+ ₦350</p>
-              </span>
+            <div>
+              {isLoading ? (
+                <div className="flex flex-col items-center justify-center">
+                  <Skeleton active />
+                </div>
+              ) : transaction?.data.length > 0 ? (
+                transaction?.data
+                  .slice(0, 4)
+                  .map((transaction: any, index: any) => (
+                    <div key={index} className="flex gap-6 justify-between">
+                      <span className="flex flex-col gap-2">
+                        <p className="text-[15px] font-bold text-[#2E2E3A]">
+                          {transaction.account_number}
+                        </p>
+                        <span className="flex gap-2">
+                          <p className="text-[12px] text-black">
+                            {formatDate(transaction.created_at)}
+                          </p>
+                          <p className="text-[12px] text-black">
+                            {formatDate(transaction.updated_at)}
+                          </p>
+                        </span>
+                      </span>
+                      <span className="flex flex-col gap-2">
+                        <p
+                          className={`text-[#1CA78B] text-[11px] bg-[#1CA78B0D] px-[10px] rounded-[4px] ${
+                            transaction.status === "successful"
+                              ? "text-green-600 bg-green-100"
+                              : "text-red-600 bg-red-100"
+                          }`}
+                        >
+                          {transaction.status}
+                        </p>
+                        <p className="text-[15px] font-bold text-[#2E2E3A]">
+                          {transaction.amount > 0
+                            ? `+ ₦${transaction.amount}`
+                            : `- ₦${Math.abs(transaction.amount)}`}
+                        </p>
+                      </span>
+                    </div>
+                  ))
+              ) : (
+                <div className="flex flex-col items-center justify-center">
+                  <p className="text-base font-medium text-[#2E2E3A] mt-4">
+                    No Transaction
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         </div>
