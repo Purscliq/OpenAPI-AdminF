@@ -25,10 +25,9 @@ const RolesTab = () => {
     <Skeleton active />
   ) : (
     <p>
-      ok
-      {/* {rolesPermissionData?.data?.map((permission: any) => (
-        <li key={permission.id}>{permission.name}</li>
-      ))} */}
+      {rolesPermissionData?.data?.map((permission: any) => (
+        <p key={permission.id}>{permission.name}</p>
+      ))}
     </p>
   );
 
@@ -44,14 +43,14 @@ const RolesTab = () => {
         <AddRolesModal />
       </div>
 
-      <div className="lg:flex gap-8 py-2 space-y-4 lg:space-y-0">
+      <div className="lg:flex flex-wrap gap-8 py-2 space-y-4 lg:space-y-0">
         {isLoadingRoles ? (
           <Skeleton active />
         ) : (
           rolesData?.data?.map((role: any) => (
             <div
               key={role.id}
-              className="flex-1 flex flex-col justify-between gap-4"
+              className="flex-1 flex-col justify-between gap-4"
             >
               <div className="rounded-[0.625rem] border border-[#D6DDEB] px-5 py-[1.1875rem] space-y-2 lg:space-y-0 lg:flex justify-between">
                 <span className="">

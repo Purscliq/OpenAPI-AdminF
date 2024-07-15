@@ -357,7 +357,7 @@ const Dashboard = () => {
           </p>
 
           {/* <div className="bg-[#0062FF1A] w-full h-20" /> */}
-          <TransactionsChart />
+          {/* <TransactionsChart /> */}
 
           <div className="flex flex-col gap-4 justify-between">
             <div>
@@ -378,9 +378,9 @@ const Dashboard = () => {
                           <p className="text-[12px] text-black">
                             {formatDate(transaction.created_at)}
                           </p>
-                          <p className="text-[12px] text-black">
+                          {/* <p className="text-[12px] text-black">
                             {formatDate(transaction.updated_at)}
-                          </p>
+                          </p> */}
                         </span>
                       </span>
                       <span className="flex flex-col gap-2">

@@ -18,7 +18,7 @@ const RolesTab = () => {
         <AddPermissionsModal />
       </div>
 
-      <div className="lg:flex gap-8 py-2 space-y-4 lg:space-y-0">
+      <div className="lg:flex flex-wrap gap-8 py-2 space-y-4 lg:space-y-0">
         {isLoadingR ? (
           <Skeleton active />
         ) : permission?.data?.length === 0 ? (

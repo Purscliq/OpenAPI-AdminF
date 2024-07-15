@@ -345,5 +345,5 @@ export const {
   useAddPermissionMutation,
   useGetUserQuery,
   useGetUseroleQuery,
-  useGetAllAdminactiviticesQuery
+  useGetAllAdminactiviticesQuery,
 } = authSlice;

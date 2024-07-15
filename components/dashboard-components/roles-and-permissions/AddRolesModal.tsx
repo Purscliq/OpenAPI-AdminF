@@ -1,20 +1,40 @@
 "use client";
 
-import React, { useState } from "react";
-import { CustomModal } from "@/lib/AntdComponents";
-import { useAddRolesMutation } from "@/services/auth/index.service";
+import React, { useState, useEffect } from "react";
+import { CustomModal, CustomSelect } from "@/lib/AntdComponents";
+import {
+  useAddRolesMutation,
+  useGetPermissonQuery,
+} from "@/services/auth/index.service";
+import { Select } from "antd";
 
 const AddRolesModal: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [selectedPermissions, setSelectedPermissions] = useState([]);
   const [addRoles, { isLoading }] = useAddRolesMutation({});
+  const { data: permissions, isLoading: isLoadingR } = useGetPermissonQuery({});
+
+  const permissionOptions = permissions?.data?.map(
+    (permission: { name: any; id: any }) => ({
+      label: permission.name,
+      value: permission.id,
+    })
+  );
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await addRoles({ name, description }).unwrap();
+      await addRoles({
+        name,
+        description,
+        permissions_list: selectedPermissions,
+      }).unwrap();
       setIsModalOpen(false);
+      setName("");
+      setDescription("");
+      setSelectedPermissions([]);
     } catch (error) {
       console.error("Failed to add role: ", error);
     }
@@ -69,6 +89,20 @@ const AddRolesModal: React.FC = () => {
                 onChange={(e) => setDescription(e.target.value)}
                 required
                 className="w-full px-3 py-2 resize-y appearance-none bg-transparent outline-none border focus:border-black shadow-sm rounded-lg"
+              />
+            </div>
+            <div className="space-y-1">
+              <label htmlFor="permissions" className="text-[#25324B] text-base">
+                Permissions
+              </label>
+              <Select
+                mode="multiple"
+                allowClear
+                style={{ width: "100%" }}
+                placeholder="Please select permissions"
+                onChange={(values) => setSelectedPermissions(values)}
+                options={permissionOptions}
+                loading={isLoadingR}
               />
             </div>
             <button

@@ -26,7 +26,7 @@ const items: TabsProps["items"] = [
 
 const RolesAndPermissions = () => {
   return (
-    <section className="max-w-[1640px] flex flex-col gap-6 bg-[#FAFAFA] px-6 py-4 md:h-screen overflow-y-scroll">
+    <section className="flex flex-col gap-6 bg-[#FAFAFA] px-6 py-4 md:h-screen overflow-y-scroll overflow-hidden">
       <span className="">
         <h2 className="text-[24px] font-bold mb-1">Roles and Permission</h2>
         <p className="text-[#262626] text-sm">

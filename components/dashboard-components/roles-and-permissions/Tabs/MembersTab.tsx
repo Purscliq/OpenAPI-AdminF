@@ -1,9 +1,6 @@
 "use client";
-import { useState } from "react";
-import {
-  CustomTable as Table,
-  // CustomInput as Input,
-} from "@/lib/AntdComponents";
+import { useState, useEffect } from "react";
+import { CustomTable as Table } from "@/lib/AntdComponents";
 import { CiSearch } from "react-icons/ci";
 import { LuListFilter } from "react-icons/lu";
 import type { ColumnsType, TablePaginationConfig } from "antd/es/table";
@@ -12,19 +9,40 @@ import { HiMiniChevronUpDown } from "react-icons/hi2";
 import AddMembersModal from "../AddMembersModal";
 import { useGetMemberRolesQuery } from "@/services/auth/index.service";
 import ChangeRolesModal from "../ChangeRolesModal";
+import { formatDate } from "@/components/helper/dateFormat";
 
 interface DataType {
   id: number;
   first_name: string;
   last_name: string;
-
   email: string;
   role: string;
   last_active: string | null;
   status: string;
 }
+
 const MembersTab = () => {
   const { data: members, isLoading } = useGetMemberRolesQuery({});
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredMembers, setFilteredMembers] = useState<DataType[]>([]);
+
+  useEffect(() => {
+    if (members?.data?.users) {
+      setFilteredMembers(members.data.users);
+    }
+  }, [members]);
+
+  useEffect(() => {
+    if (members?.data?.users) {
+      const filtered = members.data.users.filter(
+        (member: DataType) =>
+          member.first_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          member.last_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          member.email?.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredMembers(filtered);
+    }
+  }, [searchTerm, members]);
 
   const columns: ColumnsType<DataType> = [
     {
@@ -52,29 +70,14 @@ const MembersTab = () => {
       title: "Roles",
       sorter: true,
       dataIndex: "role",
-      // render: (roles) => `${roles}`,
       width: "20%",
     },
     {
       title: "Last Active",
       sorter: true,
-      dataIndex: "lastActive",
-      render: (lastActive) => (lastActive ? `${lastActive}` : "N/A"),
-      width: "20%",
-    },
-    {
-      title: "Status",
-      sorter: true,
-      dataIndex: "status",
-      render: (status) => (
-        <p
-          className={`text-black rounded-[5rem] py-[0.375rem] px-[0.625rem] w-max text-sm ${
-            status === "Active" ? "bg-[#2AD0621A]" : "bg-[#FF57331A]"
-          }`}
-        >
-          {status}
-        </p>
-      ),
+      dataIndex: "last_active",
+      render: (lastActive) =>
+        lastActive ? `${formatDate(lastActive)}` : "N/A",
       width: "20%",
     },
     {
@@ -97,6 +100,8 @@ const MembersTab = () => {
             <input
               type="text"
               placeholder="Search Members"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full py-3 pl-12 pr-4 border rounded-[0.25rem] outline-none focus:!bg-transaparent focus:border-gray-400"
             />
           </div>
@@ -116,7 +121,7 @@ const MembersTab = () => {
       <div className="bg-white overflow-x-auto">
         <Table
           columns={columns}
-          dataSource={members?.data?.users}
+          dataSource={filteredMembers}
           pagination={{ pageSize: 5 }}
           loading={isLoading}
         />
