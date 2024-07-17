@@ -37,7 +37,7 @@ const EarningsChart: React.FC<{ data: { day: string; earning: number }[] }> = ({
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
+        <XAxis dataKey="day" />
         <YAxis />
         <Tooltip />
         <Bar dataKey="pv" stackId="a" fill="#010101" />

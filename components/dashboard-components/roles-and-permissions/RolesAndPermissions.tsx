@@ -17,11 +17,11 @@ const items: TabsProps["items"] = [
     label: "Roles",
     children: <RolesTab />,
   },
-  {
-    key: "3",
-    label: "Permissions",
-    children: <PermissionsTab />,
-  },
+  // {
+  //   key: "3",
+  //   label: "Permissions",
+  //   children: <PermissionsTab />,
+  // },
 ];
 
 const RolesAndPermissions = () => {

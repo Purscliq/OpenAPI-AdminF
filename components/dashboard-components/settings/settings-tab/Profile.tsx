@@ -90,7 +90,7 @@ const Profile = () => {
                 <Select
                   mode="multiple"
                   allowClear
-                  style={{ width: "100%", height: "40px" }}
+                  style={{ width: "100%", height: "60px" }}
                   placeholder="Please select"
                   onChange={handleChange}
                   options={rolesOptions}

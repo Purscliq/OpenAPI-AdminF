@@ -25,9 +25,11 @@ const RolesTab = () => {
     <Skeleton active />
   ) : (
     <p>
-      {rolesPermissionData?.data?.map((permission: any) => (
-        <p key={permission.id}>{permission.name}</p>
-      ))}
+      {rolesPermissionData?.data.length > 0
+        ? rolesPermissionData?.data?.map((permission: any) => (
+            <p key={permission.id}>{permission.name}</p>
+          ))
+        : "No permissions"}
     </p>
   );
 
@@ -43,7 +45,7 @@ const RolesTab = () => {
         <AddRolesModal />
       </div>
 
-      <div className="lg:flex flex-wrap gap-8 py-2 space-y-4 lg:space-y-0">
+      <div className="grid-cols-1 grid md:grid-cols-3 gap-5 ">
         {isLoadingRoles ? (
           <Skeleton active />
         ) : (

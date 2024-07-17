@@ -76,6 +76,18 @@ const authSlice = ApiSlice.enhanceEndpoints({
         method: "GET",
       }),
     }),
+    AprovedCompliance: builder.mutation({
+      query: (id) => ({
+        url: `admin/compliance/businesses/${id}/compliance/approve`,
+        method: "POST",
+      }),
+    }),
+    DisaprovedCompliance: builder.mutation({
+      query: (id) => ({
+        url: `admin/compliance/businesses/${id}//compliance/disapprove`,
+        method: "POST",
+      }),
+    }),
     getAccountSumarry: builder.query({
       query: () => ({
         url: "admin/accounts/summary",
@@ -310,6 +322,8 @@ export const {
   useLazyGetDashbaordQuery,
   useGetNotificationQuery,
   useGetRecentBusinessQuery,
+  useAprovedComplianceMutation,
+  useDisaprovedComplianceMutation,
   useGetComplianceQuery,
   useGetAccountSumarryQuery,
   useGetAlAccountQuery,

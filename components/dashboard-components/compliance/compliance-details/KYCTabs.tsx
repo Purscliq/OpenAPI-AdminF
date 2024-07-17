@@ -43,7 +43,7 @@ const KYCTabs: React.FC<KYCTabsProps> = ({ data }) => {
 
   return (
     <div className="p-4 py-8 border-y grid grid-cols-1 md:grid-cols-3 md:gap-12 gap-6 text-[14px]">
-      {data.map((doc) => (
+      {data?.map((doc) => (
         <div
           key={doc.id}
           className="p-4 md:max-w-[300px] rounded-lg bg-[#FBFFF5] border border-[#85BC2C] border-dashed flex flex-col gap-2 justify-center items-center"

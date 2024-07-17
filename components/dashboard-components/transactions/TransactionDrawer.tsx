@@ -96,9 +96,7 @@ const TransactionDrawer: React.FC<TransactionDrawerProps> = ({
         >
           Download Receipt
         </button>
-        <button className="w-full text-center h-[50px] bg-white text-black border border-slate-200 rounded font-semibold">
-          Report Transaction
-        </button>
+      
       </div>
     </Drawer>
   );
