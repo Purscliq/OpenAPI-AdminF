@@ -7,6 +7,8 @@ import PersonalDetailsTab from "./PersonalDetailsTab";
 import BusinessDetailsTab from "./BusinessDetailsTab";
 import { GoArrowLeft } from "react-icons/go";
 import {
+  useAprovedComplianceMutation,
+  useDisaprovedComplianceMutation,
   useGetComplianceDetailsQuery,
   useGetSingleDetailsKYCQuery,
   useGetsingleBusinessDetailsQuery,
@@ -16,12 +18,12 @@ import KYCTabs from "./KYCTabs";
 const ComplianceDetails = () => {
   const router = useRouter();
   const [id, setId] = useState<string | null>(null);
-  const [isApproved, setIsApproved] = useState(false);
+  const [Approved] = useAprovedComplianceMutation();
+  const [disApproved] = useDisaprovedComplianceMutation();
   useEffect(() => {
     const storedId = sessionStorage.getItem("session_id");
     setId(storedId);
   }, []);
-
   const { data: compliance, isLoading } = useGetComplianceDetailsQuery(id, {
     skip: !id,
   });
@@ -32,7 +34,8 @@ const ComplianceDetails = () => {
   const { data: KYC } = useGetSingleDetailsKYCQuery(id, {
     skip: !id,
   });
-
+  const isApproved = businessDetails?.data?.compliance_approved;
+console.log(isApproved)
   const items: TabsProps["items"] = [
     {
       key: "1",
@@ -57,7 +60,13 @@ const ComplianceDetails = () => {
       children: <KYCTabs data={KYC?.data} />,
     },
   ];
-
+  const handleToggle = async () => {
+    if (isApproved) {
+      await disApproved(id);
+    } else {
+      await Approved(id);
+    }
+  };
   return (
     <section className="max-w-[1640px] flex flex-col gap-6 bg-[#FAFAFA] px-6 py-4 md:h-screen overflow-y-scroll">
       <div className="md:flex space-y-4 md:space-y-0 justify-between">
@@ -69,7 +78,6 @@ const ComplianceDetails = () => {
             Compliance Details
           </h2>
         </span>
-
         <span>
           <p className="text-[14px] text-[#010101]">
             {isApproved ? "Disapprove Compliance" : "Approve Compliance"}
@@ -78,7 +86,7 @@ const ComplianceDetails = () => {
             <button
               type="button"
               className="btn btn-ghost hover:bg-transparent p-0"
-              onClick={() => setIsApproved(!isApproved)}
+              onClick={handleToggle}
             >
               <label
                 htmlFor="approve"
@@ -90,7 +98,7 @@ const ComplianceDetails = () => {
                   type="checkbox"
                   id="approve"
                   checked={isApproved}
-                  onChange={() => setIsApproved(!isApproved)}
+                  onChange={handleToggle}
                   className="peer sr-only [&:checked_+_span_svg[data-checked-icon]]:block [&:checked_+_span_svg[data-unchecked-icon]]:hidden"
                 />
 

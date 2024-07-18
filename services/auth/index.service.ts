@@ -1,7 +1,7 @@
 import { ApiSlice } from "..";
 
 const authSlice = ApiSlice.enhanceEndpoints({
-  addTagTypes: ["developer", "roles", "members"],
+  addTagTypes: ["developer", "roles", "members", "compliance"],
 }).injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation({
@@ -78,15 +78,17 @@ const authSlice = ApiSlice.enhanceEndpoints({
     }),
     AprovedCompliance: builder.mutation({
       query: (id) => ({
-        url: `admin/compliance/businesses/${id}/compliance/approve`,
+        url: `admin/businesses/${id}/compliance/approve`,
         method: "POST",
       }),
+      invalidatesTags: ["compliance"],
     }),
     DisaprovedCompliance: builder.mutation({
       query: (id) => ({
-        url: `admin/compliance/businesses/${id}//compliance/disapprove`,
+        url: `admin/businesses/${id}/compliance/disapprove`,
         method: "POST",
       }),
+      invalidatesTags: ["compliance"],
     }),
     getAccountSumarry: builder.query({
       query: () => ({
@@ -111,6 +113,8 @@ const authSlice = ApiSlice.enhanceEndpoints({
         url: `admin/compliance/businesses/${id}`,
         method: "GET",
       }),
+      providesTags: ["compliance"],
+
     }),
     getSingleDetailsKYC: builder.query({
       query: (id) => ({
